@@ -358,6 +358,8 @@ const FgTinyEditor = {
             }).catch(err => {
                 // Remove loading animation
                 document.getElementById('tiny-loader-animation').remove();
+
+                // Print error
                 UIkit.notification({
                     message: err,
                     status: 'danger',
