@@ -24,11 +24,13 @@ const FgTinyEditor = {
         this.saveUrl = config.saveUrl ? config.saveUrl : undefined;
         this.tools = config.tools || undefined; 
 
-       
-
         // Append deps
         this.functions.deps.call(this).then(res => {
+
+            // Waiting for implementation of the dependencies
             this.functions.wait(() => {
+
+                // Catching DOM elements & bind events
                 this.catchDOM();
                 this.bindEvents();
     
@@ -344,18 +346,25 @@ const FgTinyEditor = {
                         message: `${response.success}`,
                         status: 'primary',
                         pos: 'top-center',
-                        timeout: 3000
                     });
                 } else {
                     UIkit.notification({
                         message: `data can't be saved`,
                         status: 'danger',
                         pos: 'top-center',
-                        timeout: 3000
                     });
                 }
                 
-            });
+            }).catch(err => {
+                // Remove loading animation
+                document.getElementById('tiny-loader-animation').remove();
+                UIkit.notification({
+                    message: err,
+                    status: 'danger',
+                    pos: 'top-center',
+                });
+            })
+         
         },
 
         insertEditor() {
