@@ -1,3 +1,22 @@
+/*
+// How to use
+FgTinyEditor.init({
+    path: 'http://localhost/tinyeditor',
+    saveUrl: 'http://localhost/tinyeditor/pages/save',
+    tools: [
+        {
+            icon: 'paint-bucket',
+            title: 'Pain this',
+            callback: () => {
+                alert('Pain something');
+            }
+        }
+    ]
+});
+
+*/
+
+
 const FgTinyEditor = {
     init(config = {}) {
 
@@ -5,13 +24,17 @@ const FgTinyEditor = {
         this.saveUrl = config.saveUrl ? config.saveUrl : undefined;
         this.tools = config.tools || undefined; 
 
+       
+
         // Append deps
         this.functions.deps.call(this).then(res => {
-            this.catchDOM();
-            this.bindEvents();
-
-            // Insert editor
-            this.functions.insertEditor.call(this);
+            this.functions.wait(() => {
+                this.catchDOM();
+                this.bindEvents();
+    
+                // Insert editor
+                this.functions.insertEditor.call(this);
+            });
         }).catch(err => console.error(err));
 
         // Apply styles
@@ -343,6 +366,24 @@ const FgTinyEditor = {
         },
         
         
+
+        // Waiting for function
+        wait(callback) {
+            let count = 0;
+            let interval = setInterval(() => {
+                count ++;
+                if (window.jQuery) {
+                    clearInterval(interval);
+                    callback('Success');
+                } 
+
+                if (count > 100) {
+                    clearInterval(interval);
+                    callback('Too long time waiting');
+                }
+
+            }, 100);
+        },
         
         // Create dependences
         async deps() {
@@ -385,16 +426,3 @@ const FgTinyEditor = {
 }
 
 
-FgTinyEditor.init({
-    path: 'http://localhost/tinyeditor',
-    saveUrl: 'http://localhost/tinyeditor/pages/save',
-    tools: [
-        {
-            icon: 'paint-bucket',
-            title: 'Pain this',
-            callback: () => {
-                alert('Pain something');
-            }
-        }
-    ]
-});
