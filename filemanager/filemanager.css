@@ -1,0 +1,28 @@
+/* Files container */
+.filemanager-container {
+    position: fixed;
+    width: 97%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background-color: white;
+    overflow-x: auto;
+    padding: 25px 2% 4% 2%;
+}
+
+/* FILEMANAGER HEADER */
+.pb-fm-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+/* Close */
+.pb-fm-close {cursor: pointer;}
+.pb-fm-close svg {fill: gray;}
+
+#elfinder {width: 100% !important; height: 100% !important;}
+
+.pb-fm-heading {font-size: 20px; margin-bottom: 10px;}
