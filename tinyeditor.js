@@ -50,15 +50,15 @@ const FgTinyEditor = {
                 if (!classList) {
                     this.el.forEach(item => {
                         item.addEventListener(event, callback.bind(item))
-                    })
+                    });
                 } else {
                     this.el.forEach(item => {
                         item.addEventListener(event, (e) => {
                             if (e.target.closest(classList)) {
                                 callback.call(e.target.closest(classList), e)
                             }
-                        })
-                    })
+                        });
+                    });
                 }
             }
         }
@@ -209,7 +209,8 @@ const FgTinyEditor = {
         editableElement: '.editable',
         elementCage: '.editable-cage',
         activeEditbleElement: '.editable-cage[contenteditable=true]',
-        saveContent: '.save-content'
+        saveContent: '.save-content',
+        editorWrapper: '.editor-wrapper'
     },
 
     catchDOM() {
@@ -316,9 +317,15 @@ const FgTinyEditor = {
             })
         },
 
-        // Save contnet
+        // Save content
         saveContent(e) {
             e.preventDefault();
+
+            // Disable tinymce
+            const editorToggle = e.target.closest(this.selectors.editorWrapper).querySelector('.editor-toggle');
+            this.functions.tinyDisable.call(this);
+            editorToggle.classList.remove('active');
+            editorToggle.querySelector('i').setAttribute('uk-icon', 'icon: pencil; ratio: .8;');
 
             const el = e.target.closest(this.selectors.editableElement);
             const alias = el.getAttribute('alias');
@@ -343,15 +350,15 @@ const FgTinyEditor = {
 
                 if (response.success) {
                     UIkit.notification({
-                        message: `${response.success}`,
+                        message: `<span class="uk-text-small">${response.success}</span>`,
                         status: 'primary',
-                        pos: 'top-center',
+                        pos: 'top-center'
                     });
                 } else {
                     UIkit.notification({
-                        message: `data can't be saved`,
+                        message: `<span class="uk-text-small">${response.error}</span>`,
                         status: 'danger',
-                        pos: 'top-center',
+                        pos: 'top-center'
                     });
                 }
                 
@@ -363,9 +370,9 @@ const FgTinyEditor = {
                 UIkit.notification({
                     message: err,
                     status: 'danger',
-                    pos: 'top-center',
+                    pos: 'top-center'
                 });
-            })
+            });
          
         },
 
