@@ -390,7 +390,7 @@ const FgTinyEditor = {
             let count = 0;
             let interval = setInterval(() => {
                 count ++;
-                if (window.jQuery) {
+                if (window.jQuery && typeof jQuery.ui !== 'undefined') {
                     clearInterval(interval);
                     callback('Success');
                 } 
