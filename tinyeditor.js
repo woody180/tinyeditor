@@ -80,13 +80,13 @@ const FgTinyEditor = {
         editor() {
             const toolsOuter = `<div class="editor-wrapper" class="uk-flex">%inner%</div>`;
             let tools = `
-                <a uk-tooltip="Start editing" href="editor-toggle" class="editor-tootls editor-toggle">${this.icons.pencil}</a>
-                <a uk-tooltip="Save changes" href="save-content" class="editor-tootls save-content">${this.icons.save}</a>
+                <a title="Edit" uk-tooltip="Start editing" href="editor-toggle" class="editor-tootls editor-toggle">${this.icons.pencil}</a>
+                <a title="Save" uk-tooltip="Save changes" href="save-content" class="editor-tootls save-content">${this.icons.save}</a>
             `;
 
             if (this.tools && Array.isArray(this.tools)) {
                 this.tools.forEach(tool => {
-                    tools += `<a onclick="(${tool.callback})(); return false;" uk-tooltip="${tool.title}" href="#" class="editor-tootls ${tool.trigger}">
+                    tools += `<a onclick="(${tool.callback})(); return false;" title="${tool.title}" uk-tooltip="${tool.title}" href="#" class="editor-tootls ${tool.trigger}">
                         ${tool.icon}
                     </a>`
                 });
