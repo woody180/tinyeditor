@@ -179,7 +179,7 @@ const FgTinyEditor = {
                 -webkit-box-align: center;
                 -ms-flex-align: center;
                         align-items: center;
-                position: absolute;
+                position: fixed;
                 z-index: 999;
                 left: 0;
                 top: 0;
