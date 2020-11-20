@@ -3,6 +3,7 @@
 FgTinyEditor.init({
     path: 'http://localhost/tinyeditor',
     saveUrl: 'http://localhost/tinyeditor/pages/save',
+    public_dir: 'http://localhost/tinyeditor',
     tools: [
         {
             icon: 'paint-bucket',
@@ -23,6 +24,13 @@ const FgTinyEditor = {
         this.path = config.path ? config.path : '';
         this.saveUrl = config.saveUrl ? config.saveUrl : undefined;
         this.tools = config.tools || undefined; 
+
+        // Icons set
+        this.icons = {
+            pencil: '<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"> <g> <g> <polygon points="51.2,353.28 0,512 158.72,460.8 		"/> </g> </g> <g> <g> <rect x="89.73" y="169.097" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -95.8575 260.3719)" width="353.277" height="153.599"/> </g> </g> <g> <g> <path d="M504.32,79.36L432.64,7.68c-10.24-10.24-25.6-10.24-35.84,0l-23.04,23.04l107.52,107.52l23.04-23.04 C514.56,104.96,514.56,89.6,504.32,79.36z"/> </g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>',
+            save: '<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"> <g> <g> <path d="M346,422H166c-8.284,0-15,6.716-15,15s6.716,15,15,15h180c8.284,0,15-6.716,15-15S354.284,422,346,422z"/> </g> </g> <g> <g> <path d="M346,302H166c-8.284,0-15,6.716-15,15s6.716,15,15,15h180c8.284,0,15-6.716,15-15S354.284,302,346,302z"/> </g> </g> <g> <g> <path d="M346,362H166c-8.284,0-15,6.716-15,15s6.716,15,15,15h180c8.284,0,15-6.716,15-15S354.284,362,346,362z"/> </g> </g> <g> <g> <rect x="121" width="210" height="130"/> </g> </g> <g> <g> <path d="M507.606,84.394l-80-80C424.793,1.581,420.978,0,417,0h-56v145c0,8.284-6.716,15-15,15H106c-8.284,0-15-6.716-15-15V0H15 C6.716,0,0,6.716,0,15v482c0,8.284,6.716,15,15,15c4.645,0,475.762,0,482,0c8.284,0,15-6.716,15-15V95 C512,91.022,510.419,87.207,507.606,84.394z M391,482H121V272h270V482z"/> </g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>',
+            check: '<svg viewBox="0 0 515.556 515.556" xmlns="http://www.w3.org/2000/svg"><path d="m0 274.226 176.549 176.886 339.007-338.672-48.67-47.997-290.337 290-128.553-128.552z"/></svg>'
+        }
 
         // Append deps
         this.functions.deps.call(this).then(res => {
@@ -68,13 +76,15 @@ const FgTinyEditor = {
         editor() {
             const toolsOuter = `<div class="editor-wrapper" class="uk-flex">%inner%</div>`;
             let tools = `
-                <a uk-tooltip="Start editing" href="editor-toggle" class="editor-toggle"><i uk-icon="icon: pencil; ratio: .8;"></i></a>
-                <a uk-tooltip="Save changes" href="save-content" class="save-content"><i uk-icon="icon: bookmark; ratio: .8;"></i></a>
+                <a uk-tooltip="Start editing" href="editor-toggle" class="editor-tootls editor-toggle">${this.icons.pencil}</a>
+                <a uk-tooltip="Save changes" href="save-content" class="editor-tootls save-content">${this.icons.save}</a>
             `;
 
             if (this.tools && Array.isArray(this.tools)) {
                 this.tools.forEach(tool => {
-                    tools += `<a onclick="(${tool.callback})(); return false;" uk-tooltip="${tool.title}" href="#" class="${tool.trigger}"><i uk-icon="icon: ${tool.icon}; ratio: .8;"></i></a>`
+                    tools += `<a onclick="(${tool.callback})(); return false;" uk-tooltip="${tool.title}" href="#" class="editor-tootls ${tool.trigger}">
+                        ${tool.icon}
+                    </a>`
                 });
             }
 
@@ -83,7 +93,7 @@ const FgTinyEditor = {
 
         loaderAnimation() {
             const loader =  `
-                <div id="tiny-loader-animation" class="uk-flex uk-flex-middle uk-flex-center uk-position-fixed uk-position-top-left uk-width-1-1 uk-height-1-1 uk-position-z-index" style="background-color: black">
+                <div id="tiny-loader-animation">
                     <div>
                         <div class="sk-chase">
                             <div class="sk-chase-dot"></div>
@@ -106,12 +116,21 @@ const FgTinyEditor = {
             .editor-wrapper {
                 position: absolute;
                 width: auto;
+                height: 30px;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
                 background-color: #1e87f0;
                 border-radius: 3px;
-                top: -30px;
+                top: -100%;
                 z-index: 1;
                 opacity: 0;
-                visitility: hidden;
+                visibility: hidden;
+                -webkit-transition: all .2s ease;
+                transition: all .2s ease;
             }
             .editor-wrapper a {
                 color: white;
@@ -127,7 +146,8 @@ const FgTinyEditor = {
                 position: absolute;
                 right: -2px;
                 top: 50%;
-                transform: translateY(-50%);
+                -webkit-transform: translateY(-50%);
+                        transform: translateY(-50%);
                 height: 10px;
                 width: 1px;
                 background-color: rgb(255 255 255 / 0.5);
@@ -143,11 +163,45 @@ const FgTinyEditor = {
                 visibility: visible;
             }
 
+            /* Animation loader */
+            #tiny-loader-animation {
+                background-color: rgb(0 0 0 / 0.8);
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                        justify-content: center;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                        align-items: center;
+                position: absolute;
+                z-index: 999;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            /* editor tools */
+            .editor-tootls svg {
+                width: 14px !important;
+                height: 14px !important;
+                fill: white !important;
+            }
+            .editor-tootls path {
+                fill: white !important;
+            }
+            .editor-tootls circle {
+                fill: white !important;
+            }
+
             .sk-chase {
                 width: 40px;
                 height: 40px;
                 position: relative;
-                animation: sk-chase 2.5s infinite linear both;
+                -webkit-animation: sk-chase 2.5s infinite linear both;
+                        animation: sk-chase 2.5s infinite linear both;
             }
               
             .sk-chase-dot {
@@ -156,7 +210,8 @@ const FgTinyEditor = {
                 position: absolute;
                 left: 0;
                 top: 0; 
-                animation: sk-chase-dot 2.0s infinite ease-in-out both; 
+                -webkit-animation: sk-chase-dot 2.0s infinite ease-in-out both; 
+                        animation: sk-chase-dot 2.0s infinite ease-in-out both; 
             }
               
             .sk-chase-dot:before {
@@ -166,7 +221,8 @@ const FgTinyEditor = {
                 height: 25%;
                 background-color: #fff;
                 border-radius: 100%;
-                animation: sk-chase-dot-before 2.0s infinite ease-in-out both; 
+                -webkit-animation: sk-chase-dot-before 2.0s infinite ease-in-out both;
+                        animation: sk-chase-dot-before 2.0s infinite ease-in-out both; 
             }
               
             .sk-chase-dot:nth-child(1) { animation-delay: -1.1s; }
@@ -182,20 +238,96 @@ const FgTinyEditor = {
             .sk-chase-dot:nth-child(5):before { animation-delay: -0.7s; }
             .sk-chase-dot:nth-child(6):before { animation-delay: -0.6s; }
               
+            @-webkit-keyframes sk-chase {
+                100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } 
+            }
+              
             @keyframes sk-chase {
-                100% { transform: rotate(360deg); } 
+                100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } 
+            }
+              
+            @-webkit-keyframes sk-chase-dot {
+                80%, 100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } 
             }
               
             @keyframes sk-chase-dot {
-                80%, 100% { transform: rotate(360deg); } 
+                80%, 100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } 
+            }
+              
+            @-webkit-keyframes sk-chase-dot-before {
+                50% {
+                    -webkit-transform: scale(0.4);
+                            transform: scale(0.4); 
+            } 100%, 0% {
+                    -webkit-transform: scale(1.0);
+                            transform: scale(1.0); 
+                } 
             }
               
             @keyframes sk-chase-dot-before {
                 50% {
-                    transform: scale(0.4); 
+                    -webkit-transform: scale(0.4);
+                            transform: scale(0.4); 
             } 100%, 0% {
-                    transform: scale(1.0); 
+                    -webkit-transform: scale(1.0);
+                            transform: scale(1.0); 
                 } 
+            }
+
+
+            /* Notifycation animation */
+            .tinyeditor-notify {
+                position: fixed;
+                opacity: 0;
+                visibility: hidden;
+                top: -20px;
+                left: 50%;
+                -webkit-transform: translateX(-50%);
+                    -ms-transform: translateX(-50%);
+                        transform: translateX(-50%);
+                background-color: white;
+                border-radius: 3px;
+                -webkit-box-shadow: 0 3px 11px -5px #9e9e9e;
+                        box-shadow: 0 3px 11px -5px #9e9e9e;
+                -webkit-animation: nitify 2s .3s ease;
+                        animation: nitify 2s .3s ease;
+            }
+            .tinyeditor-notify > * {
+                padding: 15px 20px;
+                font-family: inherit;
+                font-size: 15px;
+                line-height: 32px;
+                color: #4e4e4e;
+            }
+            .tinyeditor-notify.success {
+                background-color: #4CAF50;
+            }
+            .tinyeditor-notify.success > * {
+                color: white;
+            }
+            .tinyeditor-notify.info {
+                background-color: #4c6caf;
+            }
+            .tinyeditor-notify.info > * {
+                color: white;
+            }
+            .tinyeditor-notify.error {
+                background-color: #e88322;
+            }
+            .tinyeditor-notify.info > * {
+                color: white;
+            }
+            @-webkit-keyframes nitify {
+                from {top: -20px; opacity: 0; visibility: hidden;}
+                20% {top: 10px; opacity: 1; visibility: visible;}
+                80% {top: 10px; opacity: 1; visibility: visible;}
+                to {top: -20px; opacity: 0; visibility: hidden;}
+            }
+            @keyframes nitify {
+                from {top: -20px; opacity: 0; visibility: hidden;}
+                20% {top: 10px; opacity: 1; visibility: visible;}
+                80% {top: 10px; opacity: 1; visibility: visible;}
+                to {top: -20px; opacity: 0; visibility: hidden;}
             }
         `;
 
@@ -265,11 +397,32 @@ const FgTinyEditor = {
     },
 
     functions: {
+
+        // Notifications flashed
+        notify(data) {
+            const message   = data.message;
+            const type      = data.type;
+
+            if (document.querySelector('.tinyeditor-notify')) return false;
+
+            document.body.insertAdjacentHTML('beforeend', `
+            <div class="tinyeditor-notify ${type}">
+                    <div>${message}</div>
+                </div>
+            `);
+
+
+            // Remove after two seconds
+            setTimeout(() => {
+                document.querySelectorAll('.tinyeditor-notify').forEach(item => item.remove());
+            }, 2300);
+        },
+
         toggleEditor(e) {
             e.preventDefault();
 
             const editableSection = e.target.closest('.editable');
-            const icon = editableSection.querySelector('i');
+            const icon = editableSection.querySelector('.editor-toggle');
             
             // If icon not found
             if (!icon) return false;
@@ -280,12 +433,12 @@ const FgTinyEditor = {
                 // Disable all editable elements
                 this.editableElement.forEach(editable => {
                     editable.classList.remove('active');
-                    editable.querySelector('i').setAttribute('uk-icon', 'icon: pencil; ratio: .8;');
+                    icon.innerHTML = this.icons.pencil;
                 });
 
                 this.functions.tinyDisable.call(this);
 
-                icon.setAttribute('uk-icon', 'icon: check; ratio: .8;');
+                icon.innerHTML = this.icons.check;
                 editableSection.classList.add('active');
                 
                 // Make element editable
@@ -296,7 +449,7 @@ const FgTinyEditor = {
             } else {
                 this.functions.tinyDisable.call(this);
                 editableSection.classList.remove('active');
-                icon.setAttribute('uk-icon', 'icon: pencil; ratio: .8;');
+                icon.innerHTML = this.icons.pencil;
             }
 
         },
@@ -309,8 +462,8 @@ const FgTinyEditor = {
                 tinyMCE.remove()
             }
 
-            document.querySelectorAll('.editor-toggle .uk-icon').forEach(icon => {
-                icon.setAttribute('uk-icon', 'icon: pencil; ratio: .8;');
+            document.querySelectorAll('.editor-toggle').forEach(icon => {
+                icon.innerHTML = this.icons.pencil;
                 icon.classList.remove('yes');
 
                 icon.closest('.editable').querySelector('.editable-cage').removeAttribute('contenteditable');
@@ -325,7 +478,7 @@ const FgTinyEditor = {
             const editorToggle = e.target.closest(this.selectors.editorWrapper).querySelector('.editor-toggle');
             this.functions.tinyDisable.call(this);
             editorToggle.classList.remove('active');
-            editorToggle.querySelector('i').setAttribute('uk-icon', 'icon: pencil; ratio: .8;');
+            editorToggle.innerHTML = this.icons.pencil;
 
             const el = e.target.closest(this.selectors.editableElement);
             const alias = el.getAttribute('alias');
@@ -335,44 +488,36 @@ const FgTinyEditor = {
             // Start loading animation
             this.html.loaderAnimation();
 
-            UIkit.util.ajax(this.saveUrl, {
+
+            // Send patch request
+            fetch(this.saveUrl, {
                 method: 'PATCH',
                 data: JSON.stringify({
                     alias: alias,
                     content: contentHTML
                 }),
                 responseType: 'JSON'
-            }).then(res => {
-                const response = JSON.parse(res.response);
-
+            })
+            .then(res => res.json())
+            .then(res => {
                 // Remove loading animation
                 document.getElementById('tiny-loader-animation').remove();
 
-                if (response.success) {
-                    UIkit.notification({
-                        message: `<span class="uk-text-small">${response.success}</span>`,
-                        status: 'primary',
-                        pos: 'top-center'
+                if (res.success) {
+
+                    this.functions.notify({
+                        message: res.success,
+                        type: 'success',
+                        duration: 2000
                     });
                 } else {
-                    UIkit.notification({
-                        message: `<span class="uk-text-small">${response.error}</span>`,
-                        status: 'danger',
-                        pos: 'top-center'
-                    });
+                    alert(res.error);
                 }
-                
-            }).catch(err => {
-                // Remove loading animation
+            })
+            .catch(err => err => {
                 document.getElementById('tiny-loader-animation').remove();
-
-                // Print error
-                UIkit.notification({
-                    message: err,
-                    status: 'danger',
-                    pos: 'top-center'
-                });
-            });
+                alert(err)
+            })
          
         },
 

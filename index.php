@@ -56,18 +56,18 @@
     
     <script src="main.js"></script>
     <script src="tinyeditor.js"></script>
-    <script>const urlroot = 'http://tinyeditor.localhost'</script>
+    <script>const urlroot = 'http://localhost/tinyeditor'</script>
 
     <script>
         FgTinyEditor.init({
-            path: 'http://tinyeditor.localhost',
-            saveUrl: 'http://tinyeditor.localhost/pages/save',
+            path: 'http://localhost/tinyeditor',
+            saveUrl: 'http://localhost/tinyeditor/pages/save',
             tools: [
                 {
                     icon: 'paint-bucket',
                     title: 'Pain this',
                     callback: () => {
-                        alert('Pain something');
+                        alert('Paint something');
                     }
                 }
             ]
