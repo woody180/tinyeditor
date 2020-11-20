@@ -295,6 +295,7 @@ const FgTinyEditor = {
                         box-shadow: 0 3px 11px -5px #9e9e9e;
                 -webkit-animation: nitify 2s .3s ease;
                         animation: nitify 2s .3s ease;
+                z-index: 999;
             }
             .tinyeditor-notify > * {
                 padding: 15px 20px;
