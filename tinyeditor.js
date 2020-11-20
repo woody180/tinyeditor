@@ -12,7 +12,10 @@ FgTinyEditor.init({
                 alert('Pain something');
             }
         }
-    ]
+    ],
+    onsave: function(res) {
+        console.log(res)
+    },
 });
 
 */
