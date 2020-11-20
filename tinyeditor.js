@@ -125,7 +125,7 @@ const FgTinyEditor = {
                 align-items: center;
                 background-color: #1e87f0;
                 border-radius: 3px;
-                top: -100%;
+                top: -30px;
                 z-index: 1;
                 opacity: 0;
                 visibility: hidden;
@@ -488,11 +488,10 @@ const FgTinyEditor = {
             // Start loading animation
             this.html.loaderAnimation();
 
-
             // Send patch request
             fetch(this.saveUrl, {
                 method: 'PATCH',
-                data: JSON.stringify({
+                body: JSON.stringify({
                     alias: alias,
                     content: contentHTML
                 }),
