@@ -137,12 +137,12 @@ const FgTinyEditor = {
                 transition: all .2s ease;
             }
             .editor-wrapper a {
-                color: white;
-                display: inline-block;
-                padding: 3px 9px;
-                margin: 0;
-                justify-content: center;
                 position: relative;
+                display: inline-block;
+                padding: 0 12px;
+                margin: 0;
+                color: white;
+                line-height: 0;
             }
             .editor-wrapper a::after {
                 content: "";
@@ -189,8 +189,8 @@ const FgTinyEditor = {
 
             /* editor tools */
             .editor-tootls svg {
-                width: 14px !important;
-                height: 14px !important;
+                width: 12px !important;
+                height: 12px !important;
                 fill: white !important;
             }
             .editor-tootls path {
