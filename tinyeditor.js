@@ -23,7 +23,8 @@ const FgTinyEditor = {
 
         this.path = config.path ? config.path : '';
         this.saveUrl = config.saveUrl ? config.saveUrl : undefined;
-        this.tools = config.tools || undefined; 
+        this.tools = config.tools || undefined;
+        this.onsave = config.onsave || undefined;
 
         // Icons set
         this.icons = {
@@ -471,7 +472,9 @@ const FgTinyEditor = {
         },
 
         // Save content
-        saveContent(e) {
+        saveContent() {
+            
+            const e = window.event;
             e.preventDefault();
 
             // Disable tinymce
@@ -509,6 +512,11 @@ const FgTinyEditor = {
                         type: 'success',
                         duration: 2000
                     });
+
+                    // On save event callback
+                    if (this.onsave)
+                        this.onsave(res)
+
                 } else {
                     alert(res.error);
                 }
