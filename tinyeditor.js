@@ -319,7 +319,7 @@ const FgTinyEditor = {
             .tinyeditor-notify.error {
                 background-color: #e88322;
             }
-            .tinyeditor-notify.info > * {
+            .tinyeditor-notify.error > * {
                 color: white;
             }
             @-webkit-keyframes nitify {
@@ -513,9 +513,9 @@ const FgTinyEditor = {
 
                     this.functions.notify({
                         message: res.success,
-                        type: 'success',
-                        duration: 2000
+                        type: 'success'
                     });
+
 
                     // On save event callback
                     if (this.onsave)
@@ -523,11 +523,21 @@ const FgTinyEditor = {
 
                 } else {
                     alert(res.error);
+
+                    this.functions.notify({
+                        message: res.error,
+                        type: 'error',
+                    });
                 }
             })
             .catch(err => err => {
                 document.getElementById('tiny-loader-animation').remove();
-                alert(err)
+                
+                this.functions.notify({
+                    message: err,
+                    type: 'error',
+                });
+
             })
          
         },
