@@ -1,4 +1,4 @@
-# How to user
+# How to use
 
 - Create JS constant for app root address path ``` const urlroot = "http://something.com" ``` inside head tag
 - In head tag import **tinyeditor.js** file
