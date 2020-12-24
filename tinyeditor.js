@@ -385,13 +385,16 @@ const FgTinyEditor = {
                 // Open filemanager
                 filemanager((files) => {
                     let imageLink = files[0].split('files/')[1];
-                    
+
                     let image = {
                         link: `${this.path}/filemanager/files/${imageLink}`,
                         name: files[0].split('/').reverse()[0].split('-').join(' ').split('.')[0]
                     };
 
-                    cb(image.link, { title: image.name, alt: image.name });
+                    // Decode image link and image name
+                    const imgLink = decodeURI(image.link), imageName = decodeURI(image.name);
+                    
+                    cb(imgLink, { title: imageName, alt: imageName });
                 })
             },
             init_instance_callback: function(editor) {
