@@ -84,7 +84,7 @@ filemanager(files => {
 
 # Save callback
 
-Save callback response delives content wrapper **editable-cage** along with **alias**.
+Save callback response delivers content wrapper **editable-cage** along with **alias**.
 
 ## Alias 
 
