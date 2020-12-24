@@ -36,6 +36,9 @@
         }
     </style>
 
+    <script>const urlroot = "http://tinyeditor.localhost"</script>
+    <script src="tinyeditor.js"></script>
+
     <title>APP</title>
 </head>
 <body>
@@ -66,27 +69,24 @@
 
 
 
-    <script src="tinyeditor.js"></script>
-    <script>const urlroot = "http://tinyeditor.localhost"</script>
     <script>
         FgTinyEditor.init({
             path: 'http://tinyeditor.localhost',
             saveUrl: 'http://tinyeditor.localhost',
-            public_dir: 'http://tinyeditor.localhost',
-            loadjQuery: false,
+            public_dir: "http://tinyeditor.localhost",
+            loadjQuery: true,
             tools: [
                 {
                     icon: '&#9742;',
                     title: 'Paint this',
                     callback: () => {
-                        alert('Pain something');
+                        alert('Custom button with alert callback');
                     }
                 }
             ],
-            onsave: function(res) {
-                console.log(res)
-            },
+            onsave: res => console.log(res),
         });
     </script>
+    
 </body>
 </html>

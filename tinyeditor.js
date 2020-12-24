@@ -4,19 +4,17 @@ FgTinyEditor.init({
     path: 'http://tinyeditor.localhost',
     saveUrl: 'http://tinyeditor.localhost',
     public_dir: 'http://tinyeditor.localhost',
-    loadjQuery: false,
+    loadjQuery: true,
     tools: [
         {
             icon: '&#9742;',
             title: 'Paint this',
             callback: () => {
-                alert('Pain something');
+                alert('Custom button with alert callback');
             }
         }
     ],
-    onsave: function(res) {
-        console.log(res)
-    },
+    onsave: res => console.log(res),
 });
 
 */
@@ -30,8 +28,6 @@ const FgTinyEditor = {
         this.tools = config.tools || undefined;
         this.onsave = config.onsave || undefined;
         this.loadjQuery = config.loadjQuery === undefined ? true : config.loadjQuery;
-
-        console.log(this.loadjQuery);
 
         // Icons set
         this.icons = {
@@ -362,9 +358,10 @@ const FgTinyEditor = {
     tinymceConfig() {
         return {
             selector: this.selectors.activeEditbleElement,
+            icons_url: `${this.path}/material/default/icons.min.js`,
             paste_as_text: true,
-            plugins: 'quickbars paste code print preview importcss searchreplace autolink autosave directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable charmap emoticons',
-            quickbars_selection_toolbar: 'bold italic underline | formatselect | alignleft aligncenter alignright alignjustify | forecolor backcolor | image media quicklink',
+            plugins: 'quickbars lists wordcount paste code print preview importcss searchreplace autolink autosave directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable charmap emoticons',
+            quickbars_selection_toolbar: 'code | bold italic | formatselect | alignleft aligncenter alignright alignjustify | numlist bullist table | forecolor backcolor | image media quicklink',
             toolbar: false,
             menubar: false,
             inline: true,
@@ -567,13 +564,13 @@ const FgTinyEditor = {
                     `${path}/tinymce.min.js`,
                     `${path}/filemanager/js/elfinder.min.js`,
                     `${path}/filemanager/js/extras/editors.default.min.js`,
-                    `${path}/filemanagerModal.js`
+                    `${path}/filemanagerModal.js`,
                 ]
             }
 
             // If loading jquery in config
             if (this.loadjQuery) {
-                depsObject.js.push(
+                depsObject.js.unshift(
                     `${path}/plugins/jqueryui/js/jquery-3.5.1.min.js`,
                     `${path}/plugins/jqueryui/js/jquery-ui.js`,
                 )
