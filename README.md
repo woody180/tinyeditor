@@ -49,7 +49,7 @@ FgTinyEditor.init({
 
 # Make content editable
 
-In HTML parent element must have class of **editable** and change element must have class of **editable-cage**. See example
+In HTML parent element must have class of **editable** and child element must have class of **editable-cage**. See example
 
 ```
 <section>
