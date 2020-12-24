@@ -1,13 +1,14 @@
 /*
 // How to use
 FgTinyEditor.init({
-    path: 'http://localhost/tinyeditor',
-    saveUrl: 'http://localhost/tinyeditor/pages/save',
-    public_dir: 'http://localhost/tinyeditor',
+    path: 'http://tinyeditor.localhost',
+    saveUrl: 'http://tinyeditor.localhost',
+    public_dir: 'http://tinyeditor.localhost',
+    loadjQuery: false,
     tools: [
         {
-            icon: 'paint-bucket',
-            title: 'Pain this',
+            icon: '&#9742;',
+            title: 'Paint this',
             callback: () => {
                 alert('Pain something');
             }
@@ -28,6 +29,9 @@ const FgTinyEditor = {
         this.saveUrl = config.saveUrl ? config.saveUrl : undefined;
         this.tools = config.tools || undefined;
         this.onsave = config.onsave || undefined;
+        this.loadjQuery = config.loadjQuery === undefined ? true : config.loadjQuery;
+
+        console.log(this.loadjQuery);
 
         // Icons set
         this.icons = {
@@ -39,16 +43,12 @@ const FgTinyEditor = {
         // Append deps
         this.functions.deps.call(this).then(res => {
 
-            // Waiting for implementation of the dependencies
-            this.functions.wait(() => {
+            // Catching DOM elements & bind events
+            this.catchDOM();
+            this.bindEvents();
 
-                // Catching DOM elements & bind events
-                this.catchDOM();
-                this.bindEvents();
-    
-                // Insert editor
-                this.functions.insertEditor.call(this);
-            });
+            // Insert editor
+            this.functions.insertEditor.call(this);
         }).catch(err => console.error(err));
 
         // Apply styles
@@ -552,29 +552,10 @@ const FgTinyEditor = {
             });
         },
         
-        
-
-        // Waiting for function
-        wait(callback) {
-            let count = 0;
-            let interval = setInterval(() => {
-                count ++;
-                if (window.jQuery && typeof jQuery.ui !== 'undefined') {
-                    clearInterval(interval);
-                    callback('Success');
-                } 
-
-                if (count > 100) {
-                    clearInterval(interval);
-                    callback('Too long time waiting');
-                }
-
-            }, 100);
-        },
-        
         // Create dependences
         async deps() {
             const path = this.path;
+
             const depsObject = {
                 css: [
                     `${path}/plugins/jqueryui/css/jquery-ui.css`,
@@ -583,13 +564,19 @@ const FgTinyEditor = {
                     `${path}/filemanager/css/theme.css`
                 ],
                 js: [
-                    `${path}/plugins/jqueryui/js/jquery-3.5.1.min.js`,
-                    `${path}/plugins/jqueryui/js/jquery-ui.js`,
                     `${path}/tinymce.min.js`,
                     `${path}/filemanager/js/elfinder.min.js`,
                     `${path}/filemanager/js/extras/editors.default.min.js`,
                     `${path}/filemanagerModal.js`
                 ]
+            }
+
+            // If loading jquery in config
+            if (this.loadjQuery) {
+                depsObject.js.push(
+                    `${path}/plugins/jqueryui/js/jquery-3.5.1.min.js`,
+                    `${path}/plugins/jqueryui/js/jquery-ui.js`,
+                )
             }
 
             depsObject.css.forEach(linkToCss => {
