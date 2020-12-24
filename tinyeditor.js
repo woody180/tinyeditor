@@ -3,7 +3,6 @@
 FgTinyEditor.init({
     path: 'http://tinyeditor.localhost',
     saveUrl: 'http://tinyeditor.localhost',
-    public_dir: 'http://tinyeditor.localhost',
     loadjQuery: true,
     tools: [
         {
