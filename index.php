@@ -21,6 +21,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,6 +30,7 @@
         section {
             padding: 60px;
         }
+
         .container {
             max-width: 1100px;
             margin: auto;
@@ -36,18 +38,36 @@
         }
     </style>
 
-    <script>const urlroot = "http://tinyeditor.localhost"</script>
-    <script src="tinyeditor.js"></script>
+    <script>
+        const urlroot = "http://tinyeditor.localhost"
+    </script>
+    <script src="tinyeditor/tinyeditor.js"></script>
 
     <title>APP</title>
 </head>
+
 <body>
 
     <section>
         <div class="container">
             <div class="editable">
-                <div class="editable-cage">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos perferendis aspernatur necessitatibus quos possimus corporis praesentium dolorum laudantium alias consectetur excepturi quidem, nam cum, tenetur, quas magni sapiente? Odit, adipisci.</p>
+                <div class="editable-cage" id="mce_0">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos perferendis aspernatur
+                        necessitatibus quos possimus corporis praesentium dolorum laudantium alias consectetur excepturi
+                        quidem, nam cum, tenetur, quas magni sapiente? Odit, adipisci.</p>
+                    <table style="border-collapse: collapse; width: 100%;" border="1">
+                        <tbody>
+                            <tr>
+                                <td style="width: 49.6364%;">one</td>
+                                <td style="width: 49.7273%;">two</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 49.6364%;">three</td>
+                                <td style="width: 49.7273%;">four</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h1>This is something</h1>
                 </div>
             </div>
         </div>
@@ -55,7 +75,9 @@
         <div class="container">
             <div class="editable">
                 <div class="editable-cage">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos perferendis aspernatur necessitatibus quos possimus corporis praesentium dolorum laudantium alias consectetur excepturi quidem, nam cum, tenetur, quas magni sapiente? Odit, adipisci.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos perferendis aspernatur
+                        necessitatibus quos possimus corporis praesentium dolorum laudantium alias consectetur excepturi
+                        quidem, nam cum, tenetur, quas magni sapiente? Odit, adipisci.</p>
                 </div>
             </div>
         </div>
@@ -71,22 +93,20 @@
 
     <script>
         FgTinyEditor.init({
-            path: 'http://tinyeditor.localhost',
+            rootPath: 'http://tinyeditor.localhost/tinyeditor',
             saveUrl: 'http://tinyeditor.localhost',
-            public_dir: "http://tinyeditor.localhost",
             loadjQuery: true,
-            tools: [
-                {
-                    icon: '&#9742;',
-                    title: 'Paint this',
-                    callback: () => {
-                        alert('Custom button with alert callback');
-                    }
+            tools: [{
+                icon: '&#9742;',
+                title: 'Paint this',
+                callback: () => {
+                    alert('Custom button with alert callback');
                 }
-            ],
+            }],
             onsave: res => console.log(res),
         });
     </script>
-    
+
 </body>
+
 </html>

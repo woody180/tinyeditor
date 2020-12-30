@@ -72,8 +72,8 @@ function filemanager(callback) {
 
             $('#elfinder').remove();
             $('.filemanager-container').remove();
-        }, 
-        url: `${urlroot}/filemanager/php/connector.minimal.php`,
+        },
+        url: `${window.tinyeditorPath}/filemanager/php/connector.minimal.php`,
     };
 
     $(document.body).append(fmHTML);

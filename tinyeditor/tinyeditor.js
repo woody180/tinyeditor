@@ -22,11 +22,16 @@ FgTinyEditor.init({
 const FgTinyEditor = {
     init(config = {}) {
 
-        this.path = config.path ? config.path : '';
+        this.rootPath = config.rootPath ? config.rootPath : '';
         this.saveUrl = config.saveUrl ? config.saveUrl : undefined;
         this.tools = config.tools || undefined;
         this.onsave = config.onsave || undefined;
         this.loadjQuery = config.loadjQuery === undefined ? true : config.loadjQuery;
+
+        // Make path root global
+        if (this.rootPath)
+            window.tinyeditorPath = this.rootPath;
+
 
         // Icons set
         this.icons = {
@@ -357,7 +362,7 @@ const FgTinyEditor = {
     tinymceConfig() {
         return {
             selector: this.selectors.activeEditbleElement,
-            icons_url: `${this.path}/material/default/icons.min.js`,
+            icons_url: `${this.rootPath}/material/default/icons.min.js`,
             paste_as_text: true,
             plugins: 'quickbars lists wordcount paste code print preview importcss searchreplace autolink autosave directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable charmap emoticons',
             quickbars_selection_toolbar: 'code | bold italic | formatselect | alignleft aligncenter alignright alignjustify | numlist bullist table | forecolor backcolor | image media quicklink',
@@ -383,7 +388,7 @@ const FgTinyEditor = {
                     let imageLink = files[0].split('files/')[1];
 
                     let image = {
-                        link: `${this.path}/filemanager/files/${imageLink}`,
+                        link: `${this.rootPath}/filemanager/files/${imageLink}`,
                         name: files[0].split('/').reverse()[0].split('-').join(' ').split('.')[0]
                     };
 
@@ -550,7 +555,7 @@ const FgTinyEditor = {
         
         // Create dependences
         async deps() {
-            const path = this.path;
+            const path = this.rootPath;
 
             const depsObject = {
                 css: [
