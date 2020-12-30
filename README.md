@@ -7,7 +7,7 @@
 
 ```
 FgTinyEditor.init({
-    path: 'http://tinyeditor.localhost',
+    rootPath: 'http://tinyeditor.localhost',
     saveUrl: 'http://tinyeditor.localhost',
     loadjQuery: true,
     tools: [
