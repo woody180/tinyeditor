@@ -39,7 +39,7 @@
     </style>
 
     <script>
-        const urlroot = "http://tinyeditor.localhost"
+        //const urlroot = "http://tinyeditor.localhost"
     </script>
     <script src="tinyeditor/tinyeditor.js"></script>
 
