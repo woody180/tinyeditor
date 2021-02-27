@@ -123,3 +123,78 @@ Alias is an attribute of **.editable** class element. Alias attribte designed fo
     </div>
 </section>
 ```
+
+# Save content
+There are several rules to folow and also several things to note.
+
+1. Once you click the save button, putch request is triggered.
+2. The save url can be provided inside the **FgTinyEditor.init** method.
+3. Received data inside the server is the object of alias and content
+4. For this example, table name, record id and row name must be added inside the alias and must be separated with the comma.
+
+```
+<div class="editable" alias="posts.1.content">
+    <div class="editable-cage">
+        <h1>This is the sample content</h1>
+        <p>This is the sample content body</p>
+    </div>
+<div>
+```
+
+## Save function in PHP
+This is codeigniter 4 method with RedBeanPHP SQL driver
+
+```
+// Quick update
+public function quickupdate(string $url) {
+
+    // Get sent content
+    $fetchedData    = json_decode($this->request->getBody());
+    $content        = $fetchedData->content;
+    $alias          = $fetchedData->alias ?? '';
+    $page           = null;
+
+    // Get table
+    $aliasArr       = explode('.', $alias);
+    $table          = $aliasArr[0]; // Table name
+    $id             = $aliasArr[1]; // Table distinctive
+    $row            = $aliasArr[2]; // Row where content is going to be changed
+
+    // Find page to be updated
+    $page = R::findOne($table, 'id = ?', [$id]);
+
+    // Check if page exist
+    if ($page) {
+            
+        ///////////// Save base64 image as file /////////////
+        // Check if image inside the content
+        preg_match_all('/src="data:image(.*)"/', $content, $matches);
+        
+        // Generate image name with save location
+        $imageSavePath = dirname(APPPATH).'/public/tinyeditor/filemanager/files/';
+        
+        if (!empty($matches[1])) {
+            // Convert base63 to image and save to the provided location with random name
+            $savedImagesArray = base64_to_jpeg($matches[1], $imageSavePath);
+                            
+            // Replace base64 images to real images
+            foreach ($savedImagesArray as $src) 
+                $content = preg_replace('#(<img\s(?>(?!src=)[^>])*?src=")data:image/(gif|png|jpeg);base64,([\w=+/]++)("[^>]*>)#', "<img src=\"{$src}\" alt=\"\" title=\"\" />", $content);
+        }
+
+        // Prepare image src's to save, create absolute path placeholder '%RELEVANT_PATH%'
+        $content = relevantpath($content, false);
+        ///////////// Save base64 image as file - END /////////////
+        
+        // Update DB
+        $page->{$row} = $content; // Conver JSON string back to php Object
+        R::store($page);
+
+        return $this->response->setJSON(["success" => "Content has been updated successfully"]);
+    } else {
+
+        return $this->response->setJSON(["error" => "Error while saving. Page source not found!"]);
+    }
+}
+```
+
