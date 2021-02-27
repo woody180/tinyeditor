@@ -79,6 +79,25 @@ filemanager(files => {
 });
 ```
 
+# Contenet type
+In some cases you might want to save content as json. In such situations you can simply add ```<div editable-type="json" class="editable"></div>``` attribute in the parent element, where class="editable" is declared.
+
+After adding attribute you are must declare add ```editable-json="key"``` and ```editable-json="value"``` attributes in the child elements in order to determine which content is key for the json and which - value.
+
+**Take a look at the example below.**
+
+```
+<div class="editable" alias="posts.21.body" editable-type="json">
+    <ul class="editable-cage">
+        <li editable-json="key">OS</li>
+        <li editable-json="value">Windows 10</li>
+        <li editable-json="key">CPU</li>
+        <li editable-json="value">AMD Rysin 3</li>
+    </ul>
+</div>
+
+```
+
 
 # Save callback
 
