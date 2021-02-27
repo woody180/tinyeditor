@@ -91,10 +91,10 @@ After adding attribute you must add ```editable-json="key"``` and ```editable-js
 ```
 <div class="editable" alias="posts.21.body" editable-type="json">
     <ul class="editable-cage">
-        <li editable-json="key">OS</li>
-        <li editable-json="value">Windows 10</li>
-        <li editable-json="key">CPU</li>
-        <li editable-json="value">AMD Rysin 3</li>
+        <li editable-json="key1">OS</li>
+        <li editable-json="value1">Windows 10</li>
+        <li editable-json="key2">CPU</li>
+        <li editable-json="value2">AMD Rysin 3</li>
     </ul>
 </div>
 
