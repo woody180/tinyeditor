@@ -118,24 +118,27 @@ const FgTinyEditor = {
     styles() {
         const styles = `
             .editor-wrapper {
-                position: absolute;
-                width: auto;
-                height: 30px;
+                position: absolute !important;
+                width: auto !important;
+                height: 30px !important;
                 display: -webkit-box;
                 display: -ms-flexbox;
-                display: flex;
-                -webkit-box-align: center;
-                -ms-flex-align: center;
-                align-items: center;
-                background-color: #1e87f0;
-                border-radius: 3px;
-                top: -30px;
+                display: flex  !important;
+                -webkit-box-align: center !important;
+                -ms-flex-align: center !important;
+                align-items: center !important;
+                background-color: #1e87f0 !important;
+                border-radius: 3px !important;
+                top: -30px !important;
                 z-index: 1;
                 opacity: 0;
                 visibility: hidden;
+                padding: 0 !important;
                 -webkit-transition: all .2s ease;
                 transition: all .2s ease;
             }
+            .editor-wrapper::before {display: none;}
+            .editor-wrapper::after {display: none;}
             .editor-wrapper a {
                 position: relative;
                 display: inline-block;
