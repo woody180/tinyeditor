@@ -84,6 +84,8 @@ In some cases you might want to save content as json. In such situations you can
 
 After adding attribute you are must add ```editable-json="key"``` and ```editable-json="value"``` attributes in the child elements in order to determine which content is key for the json and which - value.
 
+**Note that each key must differ!**
+
 **Take a look at the example below.**
 
 ```
