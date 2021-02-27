@@ -374,12 +374,15 @@ const FgTinyEditor = {
             inline: true,
             image_title: true,
             image_advtab: true,
-    
+
+            // extended_valid_elements: "div[editable-json|class|name|id]",
+            // verify_html: false,
+                
             toolbar_drawer: 'sliding',
             spellchecker_dialog: true,
             tinycomments_mode: 'embedded',
     
-            extended_valid_elements: "svg[*],defs[*],pattern[*],desc[*],metadata[*],g[*],mask[*],path[*],line[*],marker[*],rect[*],circle[*],ellipse[*],polygon[*],polyline[*],linearGradient[*],radialGradient[*],stop[*],image[*],view[*],text[*],textPath[*],title[*],tspan[*],glyph[*],symbol[*],switch[*],use[*]",
+            extended_valid_elements: "div[editable-json|class|name|id],svg[*],defs[*],pattern[*],desc[*],metadata[*],g[*],mask[*],path[*],line[*],marker[*],rect[*],circle[*],ellipse[*],polygon[*],polyline[*],linearGradient[*],radialGradient[*],stop[*],image[*],view[*],text[*],textPath[*],title[*],tspan[*],glyph[*],symbol[*],switch[*],use[*]",
     
             // toolbar1: "undo redo | formatselect | forecolor backcolor casechange formatpainter removeformat | insertfile image media link | showcomments addcomment | alignleft aligncenter alignright alignjustify | numlist | code",
             toolbar: false,
@@ -418,7 +421,7 @@ const FgTinyEditor = {
             if (document.querySelector('.tinyeditor-notify')) return false;
 
             document.body.insertAdjacentHTML('beforeend', `
-            <div class="tinyeditor-notify ${type}">
+                <div class="tinyeditor-notify ${type}">
                     <div>${message}</div>
                 </div>
             `);
@@ -497,7 +500,31 @@ const FgTinyEditor = {
             const el = e.target.closest(this.selectors.editableElement);
             const alias = el.getAttribute('alias');
             const content = el.querySelector(this.selectors.elementCage);
-            const contentHTML = content.innerHTML.trim();
+            let contentHTML;
+
+            // Check if content is type of JSON
+            if (el.getAttribute('editable-type') && el.getAttribute('editable-type', 'json')) {
+
+                const keyValues = el.querySelectorAll('[editable-json]');
+                const keys = [];
+                const values = [];
+      
+                keyValues.forEach(elem => {
+                    if (elem.getAttribute('editable-json') === 'key') {
+                        keys.push(elem.innerText.trim());
+                    } else {
+                        values.push(elem.innerText.trim());
+                    }
+                })
+                const keyValuesArray = keys.map((el, i) => [keys[i], values[i]])
+                const contentObject = Object.fromEntries(keyValuesArray)
+
+                contentHTML = JSON.stringify(contentObject);
+            } else {
+                contentHTML = content.innerHTML.trim();
+            }
+
+            
 
             // Start loading animation
             this.html.loaderAnimation();
