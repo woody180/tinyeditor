@@ -157,7 +157,7 @@ public function quickupdate(string $url) {
     // Get table
     $aliasArr       = explode('.', $alias);
     $table          = $aliasArr[0]; // Table name
-    $id             = $aliasArr[1]; // Table distinctive
+    $id             = $aliasArr[1]; // Table determinant 
     $row            = $aliasArr[2]; // Row where content is going to be changed
 
     // Find page to be updated
