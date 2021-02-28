@@ -175,7 +175,7 @@ public function quickupdate(string $url) {
         
         if (!empty($matches[1])) {
             // Convert base63 to image and save to the provided location with random name
-            $savedImagesArray = base64_to_jpeg($matches[1], $imageSavePath);
+            $savedImagesArray = $this->base64_to_jpeg($matches[1], $imageSavePath);
                             
             // Replace base64 images to real images
             foreach ($savedImagesArray as $src) 
@@ -183,7 +183,7 @@ public function quickupdate(string $url) {
         }
 
         // Prepare image src's to save, create absolute path placeholder '%RELEVANT_PATH%'
-        $content = relevantpath($content, false);
+        $content = $this->relevantpath($content, false);
         ///////////// Save base64 image as file - END /////////////
         
         // Update DB
@@ -196,5 +196,78 @@ public function quickupdate(string $url) {
         return $this->response->setJSON(["error" => "Error while saving. Page source not found!"]);
     }
 }
+
+
+private function relevantpath($content, $prepare = true) {
+
+    // If TRUE - replace to relevant URL (site URL)
+    if ($prepare) {
+
+        $content = str_replace('%RELEVANT_PATH%', base_url('tinyeditor/filemanager'), $content);
+        return $content;
+    } else {
+        // If FALSE - replace to %RELEVANT_PATH%
+        
+        // Find images
+        $srcReplaced = [];
+        // preg_match_all("/src=[\"']([^http|$\/\/].*)[\"']/", $content, $matches);
+        preg_match_all("/src=\"(.*)\"/", $content, $matches);
+
+        foreach ($matches[1] as $key => $src) {
+            if (strpos($src, 'filemanager')) {
+                $srcArr = explode('filemanager', $src)[1];
+                $srcReplaced[] = '%RELEVANT_PATH%'.$srcArr;
+            }
+        }
+
+        // Change image urls
+        foreach ($srcReplaced as $key => $src) {
+            $content = str_replace($matches[1][$key], $src, $content);
+        }
+
+        return $content;
+    }
+    
+}
+
+
+private function base64_to_jpeg($base64_string, $output_file) {
+        
+    // Check file format
+    $exts = ['jpg', 'jpeg', 'png', 'gif', 'tiff', 'webm'];
+    
+    // Images array
+    $imagesArray = [];
+    
+    foreach ($base64_string as $base) {
+        
+        // Find extention in base64
+        preg_match('/(?:[A-z]+)/', $base, $extension);
+        $ext = !empty($extension) ? $extension[0] : null;
+
+        // Check if not null
+        if (!$ext) return false;
+
+        // Check if extension name is valid
+        if (!in_array($ext, $exts)) return false;    
+        
+        $imageName = $output_file . 'image-' . rand() . time() . '.' . $ext;
+        $imagesArray[] = $imageName;
+
+        // open the output file for writing
+        $ifp = fopen($imageName, 'wb');
+
+        $data = explode(',', $base);
+
+        // we could add validation here with ensuring count( $data ) > 1
+        fwrite( $ifp, base64_decode($data[ 1 ]) );
+
+        // clean up the file resource
+        fclose($ifp); 
+    }  
+    
+    return $imagesArray;
+}
+
 ```
 
