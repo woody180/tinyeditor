@@ -142,7 +142,7 @@ There are several rules to folow and also several things to note.
 ```
 
 ## Save function in PHP
-This is codeigniter 4 method with RedBeanPHP SQL driver
+This is **codeigniter 4** method with RedBeanPHP SQL driver and two custom helper functions for working with base64 images and generate relevant path for them
 
 ```
 // Quick update
