@@ -1,6 +1,8 @@
 # How to use
 This is a really ease to use tool ready to make page content editable with build in tinyMCE editor and elFinder file manager.
 
+![alt text](cover.jpg "Logo Title Text 1")
+
 **Requires only one file to include!**
 
 - In head tag import **tinyeditor.js** file
