@@ -108,10 +108,10 @@
                 title: 'Paint this',
                 callback: () => console.log('clicked')
             }],
-            onactive: e => console.log('Active'),
-            ondisable: e => console.log('Disabled'),
-            onclick: e => console.log('clicked'),
-            onsave: res => console.log(res),
+            onActive: e => console.log('Active'),
+            onDisabled: e => console.log('Disabled'),
+            onClick: e => console.log('clicked'),
+            onResponse: res => console.log(res),
 
             tinymceConfig: {}
         });

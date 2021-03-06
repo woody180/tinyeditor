@@ -1,11 +1,14 @@
 # How to use
+This is a really ease to use tool ready to make page content editable with build in tinyMCE editor and elFinder file manager.
+
+**Requires only one file to include!**
 
 - In head tag import **tinyeditor.js** file
 - In the end of the body tag initialize **'tinyeditor'**
 
 
 ```
- new FgTinyEditor({
+new FgTinyEditor({
     selector: '.editable',
     rootPath: 'http://tinyeditor.localhost/tinyeditor',
     saveUrl: 'http://tinyeditor.localhost',
@@ -21,10 +24,12 @@
         title: 'Paint this',
         callback: () => console.log('clicked')
     }],
-    onactive: e => console.log('Active'),
-    ondisable: e => console.log('Disabled'),
-    onclick: e => console.log('clicked'),
-    onsave: res => console.log(res),
+    onActive: e => console.log('Active'),
+    onDisabled: e => console.log('Disabled'),
+    onClick: e => console.log('clicked'),
+    onResponse: res => console.log(res),
+
+    tinymceConfig: {}
 });
 ```
 

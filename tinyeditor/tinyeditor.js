@@ -163,7 +163,7 @@ const FgTinyEditor = function (config) {
             const icon = editableSection.querySelector(this.selectors.toggleEditor);
 
             // Send trigger
-            if (this.config.onclick) this.config.onclick(e.target.closest('a'))
+            if (this.config.onClick) this.config.onClick(e.target.closest('a'))
 
             
             
@@ -174,7 +174,7 @@ const FgTinyEditor = function (config) {
             if (!editableSection.className.includes('active')) {
 
                 // Send trigger
-                if (this.config.onactive) this.config.onactive(e.target.closest('a'))
+                if (this.config.onActive) this.config.onActive(e.target.closest('a'))
                 
                 // Disable all editable elements
                 this.editableElement.forEach(editable => {
@@ -195,7 +195,7 @@ const FgTinyEditor = function (config) {
             } else {
 
                 // Send trigger
-                if (this.config.ondisable) this.config.ondisable(e.target.closest('a'));
+                if (this.config.onDisabled) this.config.onDisabled(e.target.closest('a'));
 
                 functions.tinyDisable.call(this);
                 editableSection.classList.remove('active');
@@ -295,7 +295,7 @@ const FgTinyEditor = function (config) {
                 }
 
                 // On save event callback
-                if (this.onsave) this.onsave(res)
+                if (this.config.onResponse) this.config.onResponse(res)
             })
             .catch(err => err => {
                 document.getElementById('tiny-loader-animation').remove();
