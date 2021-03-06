@@ -1,4 +1,0 @@
-1. link only tinyeditor.js to your body. Other files will be added automatically.
-2. If filemanager has an error, check filemanagerModal.js and configure path to - connector.minimal.php
-3. If tinymce won't work, first of all check if there is '<!DOCTYPE html>' declared in your HTML.
-4. Provide 'urlroot' - your site/project url like this - const urlroot = "http://mywebsite.local"

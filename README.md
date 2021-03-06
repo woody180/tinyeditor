@@ -5,19 +5,25 @@
 
 
 ```
-FgTinyEditor.init({
-    rootPath: 'http://tinyeditor.localhost',
+ new FgTinyEditor({
+    selector: '.editable',
+    rootPath: 'http://tinyeditor.localhost/tinyeditor',
     saveUrl: 'http://tinyeditor.localhost',
     loadjQuery: true,
-    tools: [
-        {
-            icon: '&#9742;',
-            title: 'Paint this',
-            callback: () => {
-                alert('Custom button with alert callback');
-            }
+    tools: [{
+        icon: '🍕',
+        title: 'Paint this',
+        callback: () => {
+            alert('Custom button with alert callback');
         }
-    ],
+    }, {
+        icon: '🎃',
+        title: 'Paint this',
+        callback: () => console.log('clicked')
+    }],
+    onactive: e => console.log('Active'),
+    ondisable: e => console.log('Disabled'),
+    onclick: e => console.log('clicked'),
     onsave: res => console.log(res),
 });
 ```
