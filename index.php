@@ -50,8 +50,8 @@
 
     <section>
         <div class="container">
-            <div class="editable">
-                <div class="editable-cage" id="mce_0">
+            <div class="some">
+                <div class="some-cage">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos perferendis aspernatur
                         necessitatibus quos possimus corporis praesentium dolorum laudantium alias consectetur excepturi
                         quidem, nam cum, tenetur, quas magni sapiente? Odit, adipisci.</p>
@@ -73,8 +73,8 @@
         </div>
 
         <div class="container">
-            <div class="editable">
-                <div class="editable-cage">
+            <div class="some">
+                <div class="some-cage">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos perferendis aspernatur
                         necessitatibus quos possimus corporis praesentium dolorum laudantium alias consectetur excepturi
                         quidem, nam cum, tenetur, quas magni sapiente? Odit, adipisci.</p>
@@ -92,17 +92,24 @@
 
 
     <script>
-        FgTinyEditor.init({
+        new FgTinyEditor({
+            selector: '.some',
             rootPath: 'http://tinyeditor.localhost/tinyeditor',
             saveUrl: 'http://tinyeditor.localhost',
             loadjQuery: true,
             tools: [{
-                icon: '&#9742;',
+                icon: '🍕',
                 title: 'Paint this',
                 callback: () => {
                     alert('Custom button with alert callback');
                 }
+            }, {
+                icon: '🎃',
+                title: 'Paint this',
+                callback: () => console.log('clicked')
             }],
+            params: [{one: 'one', two: 'two'}],
+            onclick: e => console.log(e),
             onsave: res => console.log(res),
         });
     </script>
