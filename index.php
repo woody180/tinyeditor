@@ -73,8 +73,8 @@
         </div>
 
         <div class="container">
-            <div class="some">
-                <div class="some-cage">
+            <div class="editable">
+                <div class="editable-cage">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos perferendis aspernatur
                         necessitatibus quos possimus corporis praesentium dolorum laudantium alias consectetur excepturi
                         quidem, nam cum, tenetur, quas magni sapiente? Odit, adipisci.</p>
@@ -93,7 +93,7 @@
 
     <script>
         new FgTinyEditor({
-            selector: '.some',
+            selector: '.editable',
             rootPath: 'http://tinyeditor.localhost/tinyeditor',
             saveUrl: 'http://tinyeditor.localhost',
             loadjQuery: true,
