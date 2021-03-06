@@ -277,6 +277,7 @@ const FgTinyEditor = function (config) {
                 method: 'PATCH',
                 body: JSON.stringify({
                     alias: alias,
+                    params: this.config.params ?? {},
                     content: contentHTML
                 }),
                 responseType: 'JSON'
@@ -299,7 +300,6 @@ const FgTinyEditor = function (config) {
                         this.onsave(res)
 
                 } else {
-                    alert(res.error);
 
                     functions.notify({
                         message: res.error,

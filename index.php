@@ -9,7 +9,9 @@
         // Get request data
         $data = json_decode(file_get_contents('php://input'));
 
-        echo json_encode(['success' => 'Content saved successfully']);
+        echo json_encode(['success' => 'Content saved successfully!']);
+
+        // echo json_encode(['success' => 'Content saved successfully']);
         die;
     }
 
@@ -108,7 +110,6 @@
                 title: 'Paint this',
                 callback: () => console.log('clicked')
             }],
-            params: [{one: 'one', two: 'two'}],
             onclick: e => console.log(e),
             onsave: res => console.log(res),
         });
