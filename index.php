@@ -50,8 +50,8 @@
 
     <section>
         <div class="container">
-            <div class="some">
-                <div class="some-cage">
+            <div class="editable">
+                <div class="editable-cage">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos perferendis aspernatur
                         necessitatibus quos possimus corporis praesentium dolorum laudantium alias consectetur excepturi
                         quidem, nam cum, tenetur, quas magni sapiente? Odit, adipisci.</p>
@@ -112,6 +112,8 @@
             ondisable: e => console.log('Disabled'),
             onclick: e => console.log('clicked'),
             onsave: res => console.log(res),
+
+            tinymceConfig: {}
         });
     </script>
 

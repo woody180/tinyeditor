@@ -1,24 +1,3 @@
-/*
-// How to use
-FgTinyEditor.init({
-    path: 'http://tinyeditor.localhost',
-    saveUrl: 'http://tinyeditor.localhost',
-    loadjQuery: true,
-    tools: [
-        {
-            icon: '&#9742;',
-            title: 'Paint this',
-            callback: () => {
-                alert('Custom button with alert callback');
-            }
-        }
-    ],
-    onsave: res => console.log(res),
-});
-
-*/
-
-
 const FgTinyEditor = function (config) {
 
     this.config = config;
@@ -106,30 +85,31 @@ const FgTinyEditor = function (config) {
     }
 
     this.tinymceConfig = () => {
+        const quickbars_selection_toolbar = this.config.tinymceConfig && "quickbars_selection_toolbar" in this.config.tinymceConfig ? this.config.tinymceConfig.quickbars_selection_toolbar : 'code | bold italic | formatselect | alignleft aligncenter alignright alignjustify | numlist bullist table | forecolor backcolor | image media quicklink' ;
+        const plugins = this.config.tinymceConfig && "plugins" in this.config.tinymceConfig ? this.config.tinymceConfig.plugins : 'quickbars lists wordcount paste code print preview importcss searchreplace autolink autosave directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable charmap emoticons';
+        const extended_valid_elements = this.config.tinymceConfig && "extended_valid_elements" in this.config.tinymceConfig ? config.tinymceConfig.extended_valid_elements : "div[editable-json|class|name|id],svg[*],defs[*],pattern[*],desc[*],metadata[*],g[*],mask[*],path[*],line[*],marker[*],rect[*],circle[*],ellipse[*],polygon[*],polyline[*],linearGradient[*],radialGradient[*],stop[*],image[*],view[*],text[*],textPath[*],title[*],tspan[*],glyph[*],symbol[*],switch[*],use[*]";
+        
         return {
             selector: this.selectors.activeEditbleElement,
             icons_url: `${this.rootPath}/material/default/icons.min.js`,
-            paste_as_text: true,
-            plugins: 'quickbars lists wordcount paste code print preview importcss searchreplace autolink autosave directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable charmap emoticons',
-            quickbars_selection_toolbar: 'code | bold italic | formatselect | alignleft aligncenter alignright alignjustify | numlist bullist table | forecolor backcolor | image media quicklink',
-            toolbar: false,
-            menubar: false,
-            inline: true,
-            image_title: true,
-            image_advtab: true,
+            paste_as_text: this.config.tinymceConfig && this.config.tinymceConfig.paste_as_text ? this.config.tinymceConfig.paste_as_text : true,
+            plugins,
+            quickbars_selection_toolbar,
+            toolbar: this.config.tinymceConfig && "toolbar" in this.config.tinymceConfig ? this.config.tinymceConfig.toolbar : false,
+            menubar: this.config.tinymceConfig && "menubar" in this.config.tinymceConfig ? this.config.tinymceConfig.menubar : false,
+            inline: this.config.tinymceConfig && "inline" in this.config.tinymceConfig ? this.config.tinymceConfig.inline : true,
+            image_title: this.config.tinymceConfig && "image_title" in this.config.tinymceConfig ? this.config.tinymceConfig.image_title : true,
+            image_advtab: this.config.tinymceConfig && "image_advtab" in this.config.tinymceConfig ? this.config.tinymceConfig.image_advtab : true,
 
             // extended_valid_elements: "div[editable-json|class|name|id]",
             // verify_html: false,
                 
-            toolbar_drawer: 'sliding',
-            spellchecker_dialog: true,
-            tinycomments_mode: 'embedded',
+            toolbar_drawer: this.config.tinymceConfig && "toolbar_drawer" in this.config.tinymceConfig ? this.config.tinymceConfig.toolbar_drawer : 'sliding',
+            spellchecker_dialog: this.config.tinymceConfig && "spellchecker_dialog" in this.config.tinymceConfig ? this.config.tinymceConfig.spellchecker_dialog : true,
+            tinycomments_mode: this.config.tinymceConfig && "tinycomments_mode" in this.config.tinymceConfig ? this.config.tinymceConfig.tinycomments_mode : 'embedded',
     
-            extended_valid_elements: "div[editable-json|class|name|id],svg[*],defs[*],pattern[*],desc[*],metadata[*],g[*],mask[*],path[*],line[*],marker[*],rect[*],circle[*],ellipse[*],polygon[*],polyline[*],linearGradient[*],radialGradient[*],stop[*],image[*],view[*],text[*],textPath[*],title[*],tspan[*],glyph[*],symbol[*],switch[*],use[*]",
+            extended_valid_elements,
     
-            // toolbar1: "undo redo | formatselect | forecolor backcolor casechange formatpainter removeformat | insertfile image media link | showcomments addcomment | alignleft aligncenter alignright alignjustify | numlist | code",
-            toolbar: false,
-
             // save_onsavecallback: this.save,
             file_picker_callback: (cb, value, meta) => {
                 // Open filemanager
