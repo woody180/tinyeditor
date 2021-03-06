@@ -181,12 +181,20 @@ const FgTinyEditor = function (config) {
 
             const editableSection = e.target.closest(this.config.selector);
             const icon = editableSection.querySelector(this.selectors.toggleEditor);
+
+            // Send trigger
+            if (this.config.onclick) this.config.onclick(e.target.closest('a'))
+
+            
             
             // If icon not found
             if (!icon) return false;
 
             // Toggle tinymce on/off
             if (!editableSection.className.includes('active')) {
+
+                // Send trigger
+                if (this.config.onactive) this.config.onactive(e.target.closest('a'))
                 
                 // Disable all editable elements
                 this.editableElement.forEach(editable => {
@@ -205,6 +213,10 @@ const FgTinyEditor = function (config) {
                 // Init tinymce
                 tinymce.init(this.tinymceConfig.call(this));
             } else {
+
+                // Send trigger
+                if (this.config.ondisable) this.config.ondisable(e.target.closest('a'));
+
                 functions.tinyDisable.call(this);
                 editableSection.classList.remove('active');
                 icon.innerHTML = this.icons.pencil;
@@ -294,11 +306,6 @@ const FgTinyEditor = function (config) {
                         type: 'success'
                     });
 
-
-                    // On save event callback
-                    if (this.onsave)
-                        this.onsave(res)
-
                 } else {
 
                     functions.notify({
@@ -306,6 +313,9 @@ const FgTinyEditor = function (config) {
                         type: 'error',
                     });
                 }
+
+                // On save event callback
+                if (this.onsave) this.onsave(res)
             })
             .catch(err => err => {
                 document.getElementById('tiny-loader-animation').remove();

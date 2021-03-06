@@ -10,8 +10,6 @@
         $data = json_decode(file_get_contents('php://input'));
 
         echo json_encode(['success' => 'Content saved successfully!']);
-
-        // echo json_encode(['success' => 'Content saved successfully']);
         die;
     }
 
@@ -110,7 +108,9 @@
                 title: 'Paint this',
                 callback: () => console.log('clicked')
             }],
-            onclick: e => console.log(e),
+            onactive: e => console.log('Active'),
+            ondisable: e => console.log('Disabled'),
+            onclick: e => console.log('clicked'),
             onsave: res => console.log(res),
         });
     </script>
