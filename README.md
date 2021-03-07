@@ -30,7 +30,7 @@ new FgTinyEditor({
     onDisabled: e => console.log('Disabled'),
     onClick: e => console.log('clicked'),
     onResponse: res => console.log(res),
-
+    onSave: data => console.log(data), // Optional
     tinymceConfig: {}
 });
 ```
@@ -60,7 +60,7 @@ FgTinyEditor.init({
 
 # Make content editable
 
-In HTML parent element must have class of **editable** and child element must have class of **editable-cage**. See example
+In HTML, parent element must have class that you specified in selector of the initialization function, for instances - **editable** and child element must have class the same class with '-cage' at the end: **editable-cage**. See example
 
 ```
 <section>
@@ -138,6 +138,15 @@ Alias is an attribute of **.editable** class element. Alias attribte designed fo
 ```
 
 # Save content
+
+There are two method with you can update content.
+
+First - is **onSave()** method you can use inside the init funcitno.
+
+Second - if onSave() method is not specified, plugin automatically send patch request to the server on the url declared in the initialization function, in **saveUrl**.
+
+***
+
 There are several rules to folow and also several things to note.
 
 1. Once you click the save button, putch request is triggered.
