@@ -114,9 +114,9 @@ After adding attribute you must add ```editable-json="key"``` and ```editable-js
 ```
 
 
-# Save callback
+# onResponse
 
-Save callback response delivers content wrapper **editable-cage** along with **alias**.
+**onResponse** callback delivers content wrapped in **editable-cage** along with **alias**.
 
 ## Alias 
 
@@ -141,7 +141,7 @@ Alias is an attribute of **.editable** class element. Alias attribte designed fo
 
 There are two method with you can update content.
 
-First - is **onSave()** method you can use inside the init funcitno.
+First - is **onSave(dataObject)** method you can use inside the init funcitno.
 
 Second - if onSave() method is not specified, plugin automatically send patch request to the server on the url declared in the initialization function, in **saveUrl**.
 
