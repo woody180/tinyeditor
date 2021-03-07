@@ -112,7 +112,7 @@
             onDisabled: e => console.log('Disabled'),
             onClick: e => console.log('clicked'),
             onResponse: res => console.log(res),
-
+            onSave: data => console.log(data), // Optional
             tinymceConfig: {}
         });
     </script>

@@ -261,51 +261,64 @@ const FgTinyEditor = function (config) {
 
             
 
-            // Start loading animation
-            this.html.loaderAnimation();
+            
 
-            // Send patch request
-            fetch(this.saveUrl, {
-                method: 'PATCH',
-                body: JSON.stringify({
+            if (this.config.onSave) {
+                this.config.onSave({
                     alias: alias,
                     params: this.config.params ?? {},
                     content: contentHTML
-                }),
-                responseType: 'JSON'
-            })
-            .then(res => res.json())
-            .then(res => {
-                // Remove loading animation
-                document.getElementById('tiny-loader-animation').remove();
+                });
+            } else {
 
-                if (res.success) {
+                // Start loading animation
+                this.html.loaderAnimation();
 
+                // Send patch request
+                fetch(this.saveUrl, {
+                    method: 'PATCH',
+                    body: JSON.stringify({
+                        alias: alias,
+                        params: this.config.params ?? {},
+                        content: contentHTML
+                    }),
+                    responseType: 'JSON'
+                })
+                .then(res => res.json())
+                .then(res => {
+                    // Remove loading animation
+                    document.getElementById('tiny-loader-animation').remove();
+
+                    if (res.success) {
+
+                        functions.notify({
+                            message: res.success,
+                            type: 'success'
+                        });
+
+                    } else {
+
+                        functions.notify({
+                            message: res.error,
+                            type: 'error',
+                        });
+                    }
+
+                    // On save event callback
+                    if (this.config.onResponse) this.config.onResponse(res)
+                })
+                .catch(err => err => {
+                    document.getElementById('tiny-loader-animation').remove();
+                    
                     functions.notify({
-                        message: res.success,
-                        type: 'success'
-                    });
-
-                } else {
-
-                    functions.notify({
-                        message: res.error,
+                        message: err,
                         type: 'error',
                     });
-                }
 
-                // On save event callback
-                if (this.config.onResponse) this.config.onResponse(res)
-            })
-            .catch(err => err => {
-                document.getElementById('tiny-loader-animation').remove();
-                
-                functions.notify({
-                    message: err,
-                    type: 'error',
-                });
+                })
+            }
 
-            })
+            
          
         },
 
