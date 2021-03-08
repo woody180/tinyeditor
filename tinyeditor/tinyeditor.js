@@ -349,7 +349,7 @@ const FgTinyEditor = function (config) {
             }
 
             // If loading jquery in config
-            if (this.loadjQuery) {
+            if (this.config.loadjQuery) {
                 depsObject.js.unshift(
                     `${path}/plugins/jqueryui/js/jquery-3.5.1.min.js`,
                     `${path}/plugins/jqueryui/js/jquery-ui.js`,
@@ -369,7 +369,7 @@ const FgTinyEditor = function (config) {
                 document.body.appendChild(script);
             });
 
-            return 'done';
+            await depsObject;
         }
 
     }
