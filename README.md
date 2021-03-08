@@ -45,7 +45,7 @@ Icon of the tool is HTML. It can be SVG, html unicode icon, or font icon.
 ![](tools.png "Open filemanager from tiny mce")
 
 ```
-FgTinyEditor.init({
+new FgTinyEditor({
     tools: [
         {
             icon: '&#9742;',
@@ -141,7 +141,7 @@ Alias is an attribute of **.editable** class element. Alias attribte designed fo
 
 There are two method with you can update content.
 
-First - is **onSave(dataObject)** method you can use inside the init funcitno.
+First - is **onSave(dataObject)** callback that you can use inside the init function.
 
 Second - if onSave() method is not specified, plugin automatically send patch request to the server on the url declared in the initialization function, in **saveUrl**.
 
