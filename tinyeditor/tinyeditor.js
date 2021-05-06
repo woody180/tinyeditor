@@ -277,6 +277,10 @@ const FgTinyEditor = function (config) {
                 // Send patch request
                 fetch(this.saveUrl, {
                     method: 'PATCH',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Requested-With": "XMLHttpRequest"
+                    },
                     body: JSON.stringify({
                         alias: alias,
                         params: this.config.params ?? {},
