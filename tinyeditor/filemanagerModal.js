@@ -25,13 +25,14 @@ function filemanager(callback) {
             callback(urlsArr);
             
             return hashes;
-       }
-       this.getstate = function() {
+        }
+        this.getstate = function() {
             var sel = this.files(sel),
             cnt = sel.length;
             return !this._disabled && cnt ? 0 : -1;
-       }
+        }
     };
+    
     // elFinder options
     let options = {
         soundpath: '../filemanager/sounds/',
@@ -40,27 +41,27 @@ function filemanager(callback) {
 //            `../../filemanager/themes/windows-10/css/theme.css`, 
 //        ],
         uiOptions: {
-            toolbar: [
-                ['back', 'forward'],
-                ['mkdir', 'upload', 'download'],
-                ['rename', 'resize'],
-                ['extract', 'archive'],
-                ['quicklook', 'rm', 'info'],
-                ['search'],
-            ],
+            // toolbar: [
+            //     ['back', 'forward'],
+            //     ['mkdir', 'upload', 'download'],
+            //     ['rename', 'resize'],
+            //     ['extract', 'archive'],
+            //     ['quicklook', 'rm', 'info'],
+            //     ['search'],
+            // ],
         },
-        commands: [
-            'Insert','open', 'reload', 'home', 'up', 'back', 'forward', 'getfile', 'quicklook', 
-            'download', 'rm', 'duplicate', 'rename', 'mkdir', 'mkfile', 'upload', 'copy', 
-            'cut', 'paste', 'edit', 'extract', 'archive', 'search', 'info', 'view', 'help', 'resize', 'sort', 'netmount'
-        ],
+        // commands: [
+        //     'Insert','open', 'reload', 'home', 'up', 'back', 'forward', 'getfile', 'quicklook', 
+        //     'download', 'rm', 'duplicate', 'rename', 'mkdir', 'mkfile', 'upload', 'copy', 
+        //     'cut', 'paste', 'edit', 'extract', 'archive', 'search', 'info', 'view', 'help', 'resize', 'sort', 'netmount'
+        // ],
         contextmenu: {
-            navbar: ['open', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', '|', 'info'],
-            files: [
-                'Insert', 'open', 'quicklook', '|', 'download', '|', 'copy', 'cut', 'paste', '|',
-                'rm', '|', 'edit', 'rename', 'resize', '|', 'archive', 'extract', '|'
-            ],
-            cwd: ['reload', 'back', '|', 'upload', 'mkdir', 'paste', '|', 'info'],
+            // navbar: ['open', '|', 'copy', 'cut', 'paste', 'duplicate', '|', 'rm', '|', 'info'],
+            // files: [
+            //     'Insert', 'open', 'quicklook', '|', 'download', '|', 'copy', 'cut', 'paste', '|',
+            //     'rm', '|', 'edit', 'rename', 'resize', '|', 'archive', 'extract', '|'
+            // ],
+            // cwd: ['reload', 'back', '|', 'upload', 'mkdir', 'paste', '|', 'info'],
         },
         getfile: {
             multiple: true
@@ -77,5 +78,8 @@ function filemanager(callback) {
     };
 
     $(document.body).append(fmHTML);
-    $('#elfinder').elfinder(options).elfinder('instance');
+
+    setTimeout(() => {
+        $('#elfinder').elfinder(options).elfinder('instance');
+    }, 300);
 }

@@ -355,7 +355,7 @@ const FgTinyEditor = function (config) {
             // If loading jquery in config
             if (this.config.loadjQuery) {
                 depsObject.js.unshift(
-                    `${path}/plugins/jqueryui/js/jquery-3.5.1.min.js`,
+                    `${path}/plugins/jqueryui/js/jquery-3.6.0.min.js`,
                     `${path}/plugins/jqueryui/js/jquery-ui.js`,
                 )
             }

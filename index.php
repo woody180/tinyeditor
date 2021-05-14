@@ -94,19 +94,17 @@
     <script>
         new FgTinyEditor({
             selector: '.editable',
-            rootPath: 'http://tinyeditor.localhost/tinyeditor',
-            saveUrl: 'http://tinyeditor.localhost',
+            rootPath: 'http://localhost:3000/tinyeditor',
+            saveUrl: 'http://localhost:3000',
             loadjQuery: true,
             tools: [{
-                icon: '🍕',
+                icon: '📂',
                 title: 'Paint this',
-                callback: () => {
-                    alert('Custom button with alert callback');
-                }
+                callback: () => filemanager(() => {})
             }, {
                 icon: '🎃',
                 title: 'Paint this',
-                callback: () => console.log('clicked')
+                callback: () => alert('Custom button with alert callback')
             }],
             onActive: e => console.log('Active'),
             onDisabled: e => console.log('Disabled'),
