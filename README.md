@@ -12,26 +12,25 @@ This is a really easy to use tool, ready to make page content editable with buil
 ```
 new FgTinyEditor({
     selector: '.editable',
-    rootPath: 'http://tinyeditor.localhost/tinyeditor',
-    saveUrl: 'http://tinyeditor.localhost',
+    rootPath: '<?= base_url('tinyeditor') ?>',
+    saveUrl: '<?= base_url('save') ?>',
     loadjQuery: true,
     tools: [{
-        icon: '🍕',
+        icon: '📂',
         title: 'Paint this',
-        callback: () => {
-            alert('Custom button with alert callback');
-        }
+        callback: () => filemanager(() => {})
     }, {
         icon: '🎃',
         title: 'Paint this',
-        callback: () => console.log('clicked')
+        callback: () => alert('Custom button with alert callback')
     }],
     onActive: e => console.log('Active'),
     onDisabled: e => console.log('Disabled'),
     onClick: e => console.log('clicked'),
     onResponse: res => console.log(res),
-    onSave: data => console.log(data), // Optional
+    //onSave: data => console.log(data), // Optional
     tinymceConfig: {}
+});
 });
 ```
 
@@ -163,12 +162,104 @@ There are several rules to folow and also several things to note.
 <div>
 ```
 
-## Save function in PHP
-This is **codeigniter 4** method with RedBeanPHP SQL driver and two custom helper functions for working with base64 images and generate relevant path for them
+## Save instructions for Codeigntier 4
+This is **codeigniter 4** method with PagesModel and two custom helper methods for working with base64 images and generate relevant path for them.
+
+1. Connect to your database
+2. Go to the App/Config/routes.php and add route to content update
+
+```
+$routes->patch('save', 'Save::quickupdate')
+```
+3. Go to command line and make new controller with following command - 
+```
+    php spark make:controller save
+```
+4. Go to command line and make new migration
+```
+php spark make:migration pages
+```
+5. Inside the page migration file located in - *App/Database/Migrations*, paste following code.
+```
+    <?php
+
+namespace App\Database\Migrations;
+
+use CodeIgniter\Database\Migration;
+
+class Pages extends Migration
+{
+	public function up()
+	{
+		$this->forge->addField([
+			'id' => [
+				'type' => 'INT',
+				'constraint' => 5,
+				'unsigned' => true,
+				'auto_increment' => true
+			],
+			'title' => [
+				'type' => 'VARCHAR',
+				'constraint' => 255
+			],
+			'content' => [
+				'type' => 'TEXT',
+				'null' => true
+			]
+		]);
+
+		$this->forge->addKey('id', true);
+		$this->forge->createTable('pages');
+	}
+
+	public function down()
+	{
+		$this->forge->dropTable('pages');
+	}
+}
+```
+6. Create model from command line
+```
+php spark make:model pages_model --return object
+```
+7. Go to the *App/Models/PagesModel.php* and inside the $allowedFields array add *title* and *content* fields
+```
+protected $allowedFields = [
+    'title', 'content'
+];
+```
+
+Don't forget to add proper alias to the HTML element your want to save to the database
+
+```
+<div class="editable" alias="pages.1.content">
+    <div class="editable-cage">
+        <h1>About this page</h1>
+    </div>
+</div>
+```
+
+8. Initialize tinyeditor for following...
+```
+new FgTinyEditor({
+    selector: '.editable',
+    rootPath: '<?= base_url('tinyeditor') ?>',
+    saveUrl: '<?= base_url('save') ?>',
+    loadjQuery: true,
+});
+
+```
+
+9. Now go to the Save.php controller - *App/Controllers/Save.php* and paste following methods.
+
+First method going to handle save functionality. Other - second and third method are helper methods for working with base64 images and their paths.
+
 
 ```
 // Quick update
-public function quickupdate(string $url) {
+public function quickupdate() {
+
+    $pagesModel = new \App\Models\PagesModel();
 
     // Get sent content
     $fetchedData    = json_decode($this->request->getBody());
@@ -183,7 +274,7 @@ public function quickupdate(string $url) {
     $row            = $aliasArr[2]; // Row where content is going to be changed
 
     // Find page to be updated
-    $page = R::findOne($table, 'id = ?', [$id]);
+    $page = $pagesModel->where('id', $id)->first();
 
     // Check if page exist
     if ($page) {
@@ -209,8 +300,9 @@ public function quickupdate(string $url) {
         ///////////// Save base64 image as file - END /////////////
         
         // Update DB
-        $page->{$row} = $content; // Conver JSON string back to php Object
-        R::store($page);
+        $pagesModel->update($id, [
+            $row => $content
+        ]);
 
         return $this->response->setJSON(["success" => "Content has been updated successfully"]);
     } else {
