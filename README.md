@@ -31,7 +31,6 @@ new FgTinyEditor({
     //onSave: data => console.log(data), // Optional
     tinymceConfig: {}
 });
-});
 ```
 
 # Adding cunsomt icons / tools and functions
