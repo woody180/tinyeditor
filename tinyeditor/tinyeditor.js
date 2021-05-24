@@ -444,6 +444,7 @@ FgTinyEditor.prototype.styles = function () {
             position: relative;
             display: inline-block;
             padding: 0 12px;
+            min-width: 12px;
             margin: 0;
             color: white;
             line-height: 0;
