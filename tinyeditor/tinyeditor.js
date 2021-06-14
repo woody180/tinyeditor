@@ -72,7 +72,8 @@ const FgTinyEditor = function (config) {
         elementCage: `${this.config.selector}-cage`,
         activeEditbleElement: `${this.config.selector}-cage[contenteditable=true]`,
         saveContent: `${this.config.selector}-save-content`,
-        editorWrapper: `${this.config.selector}-editor-wrapper`
+        editorWrapper: `${this.config.selector}-editor-wrapper`,
+        tools: '[tools]'
     }
 
     this.catchDOM = () => {
@@ -135,6 +136,40 @@ const FgTinyEditor = function (config) {
     }
 
     const functions = {
+
+        // Check and insert inline tools
+        inlineTools() {
+            const tools = document.querySelectorAll(this.selectors.tools);
+
+            tools.forEach(tool => {
+            
+                const toolsAttr = tool.getAttribute('tools');
+                const regexpOuter = /(\[)(.*?)(])/gm;
+                const regexpInner = /(\w+)[:](.+?)[;]/gm;
+
+                const resOuter = [...toolsAttr.matchAll(regexpOuter)];
+
+                resOuter.forEach(outer => {
+                    const attr = outer[2];
+                    const resInner = [...attr.matchAll(regexpInner)];
+
+                    let obj = {};
+                    resInner.forEach(option => {
+                        const key = option[1].trim();
+                        const val = option[2].trim();
+                        obj[key] = val;
+                    })
+
+                    tool.querySelector(`.${variables.selectorClass}-editor-wrapper`).insertAdjacentHTML('beforeend', `<a onclick="(${this.config.inlineFunctions[obj.callback]})(); return false;" title="${obj.title}" uk-tooltip="${obj.title}" href="#" class="${this.selectorClass}-editor-tootls ${obj.trigger}">
+                        ${obj.icon}
+                    </a>`);
+                });
+                
+            });
+
+        
+        },
+
 
         // Notifications flashed
         notify(data) {
@@ -394,7 +429,11 @@ const FgTinyEditor = function (config) {
 
             // Insert editor
             functions.insertEditor.call(this);
-        }).catch(err => console.error(err));
+        })
+        .then(() => {
+            functions.inlineTools.call(this);
+        })
+        .catch(err => console.error(err));
 
         // Make path root global
         if (this.rootPath) {window.tinyeditorPath = this.rootPath;}

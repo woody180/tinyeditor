@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <div class="editable">
+            <div class="editable" tools="[icon: 🎃; title: Something; callback: something;][icon: 🦘; title: New title; callback: something;]">
                 <div class="editable-cage">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos perferendis aspernatur
                         necessitatibus quos possimus corporis praesentium dolorum laudantium alias consectetur excepturi
@@ -81,7 +81,7 @@
 
         <div class="uk-container">
 
-            <div class="editable">
+            <div class="editable" tools="[icon: 🦘; title: New title; callback: something;]">
                 <div class="editable-cage">
                     <h1>This is something</h1>
                 </div>
@@ -108,24 +108,25 @@
     <script>
         new FgTinyEditor({
             selector: '.editable',
-            rootPath: 'http://localhost:3000/tinyeditor',
-            saveUrl: 'http://localhost:3000',
+            rootPath: 'http://localhost:8080/tinyeditor',
+            saveUrl: 'http://localhost:8080',
             loadjQuery: true,
             tools: [{
                 icon: '📂',
                 title: 'Paint this',
                 callback: () => filemanager(() => {})
-            }, {
-                icon: '🎃',
-                title: 'Paint this',
-                callback: () => alert('Custom button with alert callback')
             }],
             onActive: e => console.log('Active'),
             onDisabled: e => console.log('Disabled'),
             onClick: e => console.log('clicked'),
             onResponse: res => console.log(res),
             //onSave: data => console.log(data), // Optional
-            tinymceConfig: {}
+            tinymceConfig: {},
+            inlineFunctions: {
+                something: () => {
+                    alert('done');
+                }
+            }
         });
     </script>
 
