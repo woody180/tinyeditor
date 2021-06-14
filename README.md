@@ -33,6 +33,46 @@ new FgTinyEditor({
 });
 ```
 
+# Additional tools
+
+## Insert from object
+```
+new FgTinyEditor({
+    tools: [{
+        icon: '📂',
+        title: 'Paint this',
+        callback: () => filemanager(() => {})
+    }, {
+        icon: '🎃',
+        title: 'Paint this',
+        callback: () => alert('Custom button with alert callback')
+    }],
+})
+```
+
+## Insert individual tools inline
+```
+<div class="editable" tools="[icon: 🎃; title: Something; callback: something;][icon: 🦘; title: New title; callback: something;]">
+    <div class="editable-cage">
+        <p quas magni sapiente? Odit, adipisci.</p>
+    </div>
+</div>
+```
+When inserting individual tools, cacllback must be declared inside initialization object, inside **inlineFunctions** object
+```
+new FgTinyEditor({
+    selector: '.editable',
+    rootPath: 'http://localhost:8080/tinyeditor',
+    saveUrl: 'http://localhost:8080',
+    loadjQuery: true,
+    inlineFunctions: {
+        something: () => {
+            alert('done');
+        }
+    }
+});
+```
+
 # Adding cunsomt icons / tools and functions
 
 Inside options object add **tools** key with value of array.
