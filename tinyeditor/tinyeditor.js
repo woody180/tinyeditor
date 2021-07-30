@@ -28,12 +28,17 @@ const FgTinyEditor = function (config) {
     }
 
     this.html = {
-        editor() {
+        editor(defaultTools = null) {
+
             const toolsOuter = `<div class="${variables.selectorClass}-editor-wrapper" class="uk-flex">%inner%</div>`;
-            let tools = `
-                <a title="Edit" uk-tooltip="Start editing" href="${variables.selectorClass}-editor-toggle" class="${variables.selectorClass}-editor-tootls ${this.selectors.toggleEditor.split('.')[1]}">${this.icons.pencil}</a>
-                <a title="Save" uk-tooltip="Save changes" href="${variables.selectorClass}-save-content" class="${variables.selectorClass}-editor-tootls ${variables.selectorClass}-save-content">${this.icons.save}</a>
-            `;
+            let tools = ``;
+
+            if (defaultTools !== 'false') {
+                tools = `
+                    <a title="Edit" uk-tooltip="Start editing" href="${variables.selectorClass}-editor-toggle" class="${variables.selectorClass}-editor-tootls ${this.selectors.toggleEditor.split('.')[1]}">${this.icons.pencil}</a>
+                    <a title="Save" uk-tooltip="Save changes" href="${variables.selectorClass}-save-content" class="${variables.selectorClass}-editor-tootls ${variables.selectorClass}-save-content">${this.icons.save}</a>
+                `;
+            }
 
             if (this.tools && Array.isArray(this.tools)) {
                 this.tools.forEach(tool => {
@@ -364,7 +369,8 @@ const FgTinyEditor = function (config) {
         insertEditor() {
             if (!this.editableElement) return false;
             this.editableElement.forEach(editableSection => {
-                editableSection.insertAdjacentHTML('afterbegin', this.html.editor.call(this));
+                const defaultTools = editableSection.getAttribute('default-tools');
+                editableSection.insertAdjacentHTML('afterbegin', this.html.editor.call(this, defaultTools));
             });
         },
         

@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <div class="editable" tools="[icon: 🎃; title: Something; callback: something;][icon: 🦘; title: New title; callback: something;]">
+            <div class="editable" default-tools="false" tools="[icon: 🎃; title: Something; callback: something;][icon: 🦘; title: New title; callback: something;]">
                 <div class="editable-cage">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos perferendis aspernatur
                         necessitatibus quos possimus corporis praesentium dolorum laudantium alias consectetur excepturi
