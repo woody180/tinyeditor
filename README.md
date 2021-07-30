@@ -58,7 +58,7 @@ new FgTinyEditor({
     </div>
 </div>
 ```
-When inserting individual tools, cacllback must be declared inside initialization object, inside **inlineFunctions** object
+When inserting individual tools, callback must be declared inside initialization object, inside **inlineFunctions** object
 ```
 new FgTinyEditor({
     selector: '.editable',
