@@ -14,6 +14,7 @@ new FgTinyEditor({
     selector: '.editable',
     rootPath: '<?= base_url('tinyeditor') ?>',
     saveUrl: '<?= base_url('save') ?>',
+    defaultTools: true, // Default is true
     loadjQuery: true,
     tools: [{
         icon: '📂',
@@ -32,6 +33,27 @@ new FgTinyEditor({
     tinymceConfig: {}
 });
 ```
+
+# Remove default tools
+
+If you want to remove default tools from all editable areas, you must add **defaultTools: false** inside options.
+
+```
+new FgTinyEditor({
+    defaultTools: true, // Default is true
+});
+```
+
+In order to disable default tools only in one editable area, you must provide attribute **default-tools="false"**
+
+```
+<div class="editable" default-tools="false">
+    <div class="editable-cage">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+    </div>
+</div>
+```
+
 
 # Additional tools
 
