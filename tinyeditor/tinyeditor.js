@@ -1,6 +1,7 @@
 const FgTinyEditor = function (config) {
 
     this.config = config;
+    this.config.defaultTools = this.config.defaultTools === undefined ? this.config.defaultTools = true : this.config.defaultTools;
 
     this.lib = (el = undefined) => {
         return {
@@ -33,7 +34,24 @@ const FgTinyEditor = function (config) {
             const toolsOuter = `<div class="${variables.selectorClass}-editor-wrapper" class="uk-flex">%inner%</div>`;
             let tools = ``;
 
-            if (defaultTools !== 'false') {
+            // If default tools is on and no attribute on element.
+            if (this.config.defaultTools && defaultTools === null) {
+                tools = `
+                    <a title="Edit" uk-tooltip="Start editing" href="${variables.selectorClass}-editor-toggle" class="${variables.selectorClass}-editor-tootls ${this.selectors.toggleEditor.split('.')[1]}">${this.icons.pencil}</a>
+                    <a title="Save" uk-tooltip="Save changes" href="${variables.selectorClass}-save-content" class="${variables.selectorClass}-editor-tootls ${variables.selectorClass}-save-content">${this.icons.save}</a>
+                `;
+            }
+            
+            // If default tools is on and there is default-tools attribute and attribute is on.
+            if (this.config.defaultTools && defaultTools && defaultTools !== 'false') {
+                tools = `
+                    <a title="Edit" uk-tooltip="Start editing" href="${variables.selectorClass}-editor-toggle" class="${variables.selectorClass}-editor-tootls ${this.selectors.toggleEditor.split('.')[1]}">${this.icons.pencil}</a>
+                    <a title="Save" uk-tooltip="Save changes" href="${variables.selectorClass}-save-content" class="${variables.selectorClass}-editor-tootls ${variables.selectorClass}-save-content">${this.icons.save}</a>
+                `;
+            }
+
+            // if there is default-tools attribute and it's on.
+            if (defaultTools && defaultTools !== 'false') {
                 tools = `
                     <a title="Edit" uk-tooltip="Start editing" href="${variables.selectorClass}-editor-toggle" class="${variables.selectorClass}-editor-tootls ${this.selectors.toggleEditor.split('.')[1]}">${this.icons.pencil}</a>
                     <a title="Save" uk-tooltip="Save changes" href="${variables.selectorClass}-save-content" class="${variables.selectorClass}-editor-tootls ${variables.selectorClass}-save-content">${this.icons.save}</a>

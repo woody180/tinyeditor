@@ -110,6 +110,7 @@
             selector: '.editable',
             rootPath: 'http://localhost:8080/tinyeditor',
             saveUrl: 'http://localhost:8080',
+            // defaultTools: true,
             loadjQuery: true,
             tools: [{
                 icon: '📂',
