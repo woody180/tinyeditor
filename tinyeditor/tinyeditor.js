@@ -321,7 +321,7 @@ const FgTinyEditor = function (config) {
             // Remove tags from HTML, strip_tags
             if (el.getAttribute('wipe-tags')) {
                 contentHTML = contentHTML.replace(/(<([^>]+)>)/gi, "");
-                contentHTML.trim();
+                contentHTML = contentHTML.trim();
             }
             
 
