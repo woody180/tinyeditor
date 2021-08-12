@@ -34,6 +34,17 @@ new FgTinyEditor({
 });
 ```
 
+# Remove tags from content
+
+In cases when is unnecessary to save clean text, without html tags, add **wipe-tags** attribute to parent editable element. 
+```
+<div class="editable" wipe-tags="true">
+    <div class="editable-cage">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+    </div>
+</div>
+```
+
 # Remove default tools
 
 If you want to remove default tools from all editable areas, you must add **defaultTools: false** inside options.

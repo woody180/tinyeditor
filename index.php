@@ -87,7 +87,7 @@
                 </div>
             </div>
 
-            <div class="editable">
+            <div class="editable" wipe-tags="true">
                 <div class="editable-cage">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos perferendis aspernatur
                         necessitatibus quos possimus corporis praesentium dolorum laudantium alias consectetur excepturi
