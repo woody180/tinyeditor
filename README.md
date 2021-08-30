@@ -159,7 +159,7 @@ new FgTinyEditor({
 })
 ```
 
-2. Add params attribute inline, directly to the element. Note that params must be the type of JSON.
+2. Add params attribute inline, directly to the element. Note that params must be **JSON**.
 
 *Note that **params** attribute rewrites **params** object added to the initialization function.*
 
