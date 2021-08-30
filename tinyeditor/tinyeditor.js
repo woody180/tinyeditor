@@ -324,6 +324,11 @@ const FgTinyEditor = function (config) {
                 contentHTML = contentHTML.trim();
             }
             
+            
+            // Inline params
+            const params = el.getAttribute('params');
+            if (params) this.config.params = JSON.parse(params);
+            
 
             if (this.config.onSave) {
                 this.config.onSave({
