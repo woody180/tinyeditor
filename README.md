@@ -148,6 +148,27 @@ In HTML, parent element must have class that you specified in selector of the in
 </section>
 ```
 
+# Add parameters. Sed parameters to the save method.
+
+Sometimes you want to send some custom parameters to the save method. There are two options for that.
+1. Add parameters object to the initialization function.
+
+```
+new FgTinyEditor({
+    params: {type: 'profile', mode: 'direct'},
+})
+```
+
+2. Add params attribute inline, directly to the element. Note that params must be the type of JSON.
+
+*Note that **params** attribute rewrites **params** object added to the initialization function.*
+
+```
+<div class="editable" params='{"one": "This is one", "two": "This is two"}'>
+    <div class="editable-cage">...</div>
+</div>
+```
+
 # elFinder file manager
 
 Filemanager can be used from tinymce as well as with independent function ```filemanager(callback)```
