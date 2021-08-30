@@ -148,7 +148,7 @@ In HTML, parent element must have class that you specified in selector of the in
 </section>
 ```
 
-# Add parameters. Sed parameters to the save method.
+# Add parameters. Send parameters to the save method.
 
 Sometimes you want to send some custom parameters to the save method. There are two options for that.
 1. Add parameters object to the initialization function.
