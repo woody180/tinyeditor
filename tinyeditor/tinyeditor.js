@@ -210,7 +210,7 @@ const FgTinyEditor = function (config) {
             notifyElem.appendChild(notifyClose);
             notifyElem.appendChild(msg);
             notifyElem.classList.add('tinyeditor-notify', type);
-            notifyClose.classList.add('fg-tinyeditor-notifycation-close');
+            notifyClose.classList.add('fg-tinyeditor-notification-close');
             notifyClose.innerHTML = icons.close;
             notifyClose.setAttribute('onclick', 'this.closest(".tinyeditor-notify").remove()');
             msg.innerHTML = message;
@@ -518,7 +518,7 @@ const FgTinyEditor = function (config) {
 // Styles 
 FgTinyEditor.prototype.styles = function () {
     const styles = `
-        .fg-tinyeditor-notifycation-close {
+        .fg-tinyeditor-notification-close {
             position: absolute;
             right: 15px;
             top: 50%;
@@ -527,7 +527,7 @@ FgTinyEditor.prototype.styles = function () {
             padding: 0 !important;
             line-height: 0 !important;
         }
-        .fg-tinyeditor-notifycation-close svg {
+        .fg-tinyeditor-notification-close svg {
             width: 12px;
             height: 12px;
             fill: white;
@@ -699,7 +699,7 @@ FgTinyEditor.prototype.styles = function () {
         }
 
 
-        /* Notifycation animation */
+        /* notification animation */
         .tinyeditor-notify {
             position: fixed;
             opacity: 0;
