@@ -28,6 +28,10 @@ const FgTinyEditor = function (config) {
         selectorClass: this.config.selector.split('.')[1]
     }
 
+    const icons = {
+        close: '<svg viewBox="0 0 329.26933 329" xmlns="http://www.w3.org/2000/svg"><path d="m194.800781 164.769531 128.210938-128.214843c8.34375-8.339844 8.34375-21.824219 0-30.164063-8.339844-8.339844-21.824219-8.339844-30.164063 0l-128.214844 128.214844-128.210937-128.214844c-8.34375-8.339844-21.824219-8.339844-30.164063 0-8.34375 8.339844-8.34375 21.824219 0 30.164063l128.210938 128.214843-128.210938 128.214844c-8.34375 8.339844-8.34375 21.824219 0 30.164063 4.15625 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921875-2.089844 15.082031-6.25l128.210937-128.214844 128.214844 128.214844c4.160156 4.160156 9.621094 6.25 15.082032 6.25 5.460937 0 10.921874-2.089844 15.082031-6.25 8.34375-8.339844 8.34375-21.824219 0-30.164063zm0 0"/></svg>'
+    }
+
     this.html = {
         editor(defaultTools = null) {
 
@@ -199,18 +203,39 @@ const FgTinyEditor = function (config) {
             const message   = data.message;
             const type      = data.type;
 
-            if (document.querySelector('.tinyeditor-notify')) return false;
+            const notifyElem    = document.createElement('div');
+            const notifyClose   = document.createElement('span');
+            const msg           = document.createElement('div');
 
-            document.body.insertAdjacentHTML('beforeend', `
-                <div class="tinyeditor-notify ${type}">
-                    <div>${message}</div>
-                </div>
-            `);
+            notifyElem.appendChild(notifyClose);
+            notifyElem.appendChild(msg);
+            notifyElem.classList.add('tinyeditor-notify', type);
+            notifyClose.classList.add('fg-tinyeditor-notifycation-close');
+            notifyClose.innerHTML = icons.close;
+            notifyClose.setAttribute('onclick', 'this.closest(".tinyeditor-notify").remove()');
+            msg.innerHTML = message;
+            document.body.appendChild(notifyElem);
 
+            // Define position
+            const allNotifications      = document.querySelectorAll('.tinyeditor-notify');
+            const clientRect            = notifyElem.getBoundingClientRect();
+            const notificationsLength   = allNotifications.length;
+            const height                = clientRect.height + 15;
+            const topPos                = notificationsLength < 2 ? 15 : allNotifications[notificationsLength - 2].getBoundingClientRect().top + height;
+
+            notifyElem.style.top = topPos + 'px';
+            
+            setTimeout(() => {
+                notifyElem.classList.add('active');
+            }, 100);
 
             // Remove after two seconds
+            //clearTimeout(variables.notifyTimer);
             setTimeout(() => {
-                document.querySelectorAll('.tinyeditor-notify').forEach(item => item.remove());
+                notifyElem.classList.remove('active');
+                setTimeout(() => {
+                    notifyElem.remove();
+                }, 200);
             }, 2300);
         },
 
@@ -369,9 +394,12 @@ const FgTinyEditor = function (config) {
 
                     } else {
 
+                        const key = Object.keys(res)[0];
+                        console.log(res[key]);
+
                         functions.notify({
-                            message: res.error,
-                            type: 'error',
+                            message: res[key],
+                            type: key
                         });
                     }
 
@@ -490,6 +518,20 @@ const FgTinyEditor = function (config) {
 // Styles 
 FgTinyEditor.prototype.styles = function () {
     const styles = `
+        .fg-tinyeditor-notifycation-close {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            padding: 0 !important;
+            line-height: 0 !important;
+        }
+        .fg-tinyeditor-notifycation-close svg {
+            width: 12px;
+            height: 12px;
+            fill: white;
+        }
         ${this.config.selector}-editor-wrapper {
             position: absolute !important;
             width: auto !important;
@@ -662,8 +704,11 @@ FgTinyEditor.prototype.styles = function () {
             position: fixed;
             opacity: 0;
             visibility: hidden;
-            top: -20px;
             left: 50%;
+            padding-right: 20px;
+            -webkit-transition: all .3s ease;
+                -ms-transition: all .3s ease;
+                    transition: all .3s ease;
             -webkit-transform: translateX(-50%);
                 -ms-transform: translateX(-50%);
                     transform: translateX(-50%);
@@ -671,9 +716,13 @@ FgTinyEditor.prototype.styles = function () {
             border-radius: 3px;
             -webkit-box-shadow: 0 3px 11px -5px #9e9e9e;
                     box-shadow: 0 3px 11px -5px #9e9e9e;
-            -webkit-animation: nitify 2s .3s ease;
-                    animation: nitify 2s .3s ease;
+            /*-webkit-animation: nitify 2s .3s ease;
+                    animation: nitify 2s .3s ease;*/
             z-index: 999;
+        }
+        .tinyeditor-notify.active {
+            opacity: 1;
+            visibility: visible;
         }
         .tinyeditor-notify > * {
             padding: 15px 20px;
@@ -700,7 +749,7 @@ FgTinyEditor.prototype.styles = function () {
         .tinyeditor-notify.error > * {
             color: white;
         }
-        @-webkit-keyframes nitify {
+        /*@-webkit-keyframes nitify {
             from {top: -20px; opacity: 0; visibility: hidden;}
             20% {top: 10px; opacity: 1; visibility: visible;}
             80% {top: 10px; opacity: 1; visibility: visible;}
@@ -711,7 +760,7 @@ FgTinyEditor.prototype.styles = function () {
             20% {top: 10px; opacity: 1; visibility: visible;}
             80% {top: 10px; opacity: 1; visibility: visible;}
             to {top: -20px; opacity: 0; visibility: hidden;}
-        }
+        }*/
     `;
 
     const styleEl = document.createElement('style');

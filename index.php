@@ -9,7 +9,7 @@
         // Get request data
         $data = json_decode(file_get_contents('php://input'));
 
-        echo json_encode(['success' => 'Content saved successfully!']);
+        echo json_encode(['info' => 'Content saved successfully!']);
         die;
     }
 
