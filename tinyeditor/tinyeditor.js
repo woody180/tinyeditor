@@ -113,7 +113,7 @@ const FgTinyEditor = function (config) {
     }
 
     this.tinymceConfig = () => {
-        const quickbars_selection_toolbar = this.config.tinymceConfig && "quickbars_selection_toolbar" in this.config.tinymceConfig ? this.config.tinymceConfig.quickbars_selection_toolbar : 'code | bold italic | formatselect | alignleft aligncenter alignright alignjustify | numlist bullist table | forecolor backcolor | image media quicklink' ;
+        const quickbars_selection_toolbar = this.config.tinymceConfig && "quickbars_selection_toolbar" in this.config.tinymceConfig ? this.config.tinymceConfig.quickbars_selection_toolbar : 'code | bold italic | formatselect | alignleft aligncenter alignright alignjustify | numlist bullist table | forecolor backcolor | image media link' ;
         const plugins = this.config.tinymceConfig && "plugins" in this.config.tinymceConfig ? this.config.tinymceConfig.plugins : 'quickbars lists wordcount paste code print preview importcss searchreplace autolink autosave directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable charmap emoticons';
         const extended_valid_elements = this.config.tinymceConfig && "extended_valid_elements" in this.config.tinymceConfig ? config.tinymceConfig.extended_valid_elements : "div[editable-json|class|name|id],svg[*],defs[*],pattern[*],desc[*],metadata[*],g[*],mask[*],path[*],line[*],marker[*],rect[*],circle[*],ellipse[*],polygon[*],polyline[*],linearGradient[*],radialGradient[*],stop[*],image[*],view[*],text[*],textPath[*],title[*],tspan[*],glyph[*],symbol[*],switch[*],use[*]";
         
