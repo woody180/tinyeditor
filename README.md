@@ -106,7 +106,7 @@ new FgTinyEditor({
 });
 ```
 
-# Adding cunsomt icons / tools and functions
+# Adding custom icons / tools and functions
 
 Inside options object add **tools** key with value of array.
 Array consists from object of tools. Each object consists from tool icon, tool title and the callback.
