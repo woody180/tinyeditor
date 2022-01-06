@@ -43,7 +43,7 @@
     <section class="uk-section">
         <div class="uk-container">
 
-            <div class="editable">
+            <div class="editable" editor-tools="false">
                 <div class="editable-cage">
                     <h1>Heading for table</h1>
                 </div>

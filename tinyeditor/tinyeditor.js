@@ -274,7 +274,11 @@ const FgTinyEditor = function (config) {
                 editableSection.querySelector(this.selectors.elementCage).setAttribute('contenteditable', true);
 
                 // Init tinymce
-                tinymce.init(this.tinymceConfig.call(this));
+                const editorTools = editableSection.getAttribute('editor-tools');
+                if (!editorTools || editorTools === 'true') {
+                    tinymce.init(this.tinymceConfig.call(this));
+                }
+
             } else {
 
                 // Send trigger
