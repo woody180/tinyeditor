@@ -106,6 +106,18 @@ new FgTinyEditor({
 });
 ```
 
+# Remove tinymce toolbar / tools
+Sometimes you might need to remove tinymce toolbar and make content editable only. Now it's possible to privide inline attribute `editor-tools="false"` to remove tinymce toolbar (tools)
+
+```
+<div class="editable" editor-tools="false">
+    <div class="editable-cage">
+        <p quas magni sapiente? Odit, adipisci.</p>
+    </div>
+</div>
+```
+
+
 # Adding custom icons / tools and functions
 
 Inside options object add **tools** key with value of array.
